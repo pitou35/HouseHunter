@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="firebase_url">https://househunter-a4c56.firebaseio.com</string>
+</resources>
