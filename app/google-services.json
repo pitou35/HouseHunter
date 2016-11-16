@@ -1,29 +1,25 @@
 {
   "project_info": {
-    "project_number": "621327510241",
-    "firebase_url": "https://househunter-f7307.firebaseio.com",
-    "project_id": "househunter-f7307",
-    "storage_bucket": "househunter-f7307.appspot.com"
+    "project_number": "113197914164",
+    "firebase_url": "https://househunter-a4c56.firebaseio.com",
+    "project_id": "househunter-a4c56",
+    "storage_bucket": "househunter-a4c56.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:621327510241:android:1225408136b575fb",
+        "mobilesdk_app_id": "1:113197914164:android:1225408136b575fb",
         "android_client_info": {
           "package_name": "com.example.pitou.househunter"
         }
       },
       "oauth_client": [
         {
-          "client_id": "621327510241-sploces56gh4go8r8mibnurvs3kvl6ap.apps.googleusercontent.com",
+          "client_id": "113197914164-gmand12p7ie1bptrmrso7sgi658jlpop.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDNA1vSvLn68eAWpnNnPLsWZ6ngfwbwyf8"
-        }
-      ],
+      "api_key": [],
       "services": {
         "analytics_service": {
           "status": 1
