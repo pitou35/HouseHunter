@@ -80,4 +80,8 @@ gradle-app.setting
 .gradletasknamecache
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
+<<<<<<< HEAD
 # gradle/wrapper/gradle-wrapper.properties
+=======
+# gradle/wrapper/gradle-wrapper.properties
+>>>>>>> 6ca4997c1535d009bb7ba37c57f475032a300f7f
