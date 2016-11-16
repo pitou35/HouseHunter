@@ -74,12 +74,17 @@ public class CreateAccFragment extends Fragment {
                 }
 
                 progressBar.setVisibility(View.VISIBLE);
-                
+
             }
         });
 
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        progressBar.setVisibility(View.GONE);
+    }
 
 }
