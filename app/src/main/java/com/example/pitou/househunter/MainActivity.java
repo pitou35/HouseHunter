@@ -1,6 +1,8 @@
 package com.example.pitou.househunter;
 
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         FragmentTransaction ft=getFragmentManager().beginTransaction();
-        ft.replace(R.id.current_fragment, new CreateAccFragment());
+        ft.replace(R.id.current_fragment, new ConnectionFragment());
         ft.commit();
     }
 
