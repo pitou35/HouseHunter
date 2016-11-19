@@ -1,9 +1,12 @@
 package com.example.pitou.househunter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.StrictMode;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +16,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 
@@ -30,7 +36,13 @@ public class CreateAccFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         // Defines the xml file for the fragment
 
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                .permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         View view= inflater.inflate(R.layout.fragment_create_acc, parent, false);
+       auth=FirebaseAuth.getInstance();
+
         btnSignIn = (Button) view.findViewById(R.id.sign_in_button);
         btnSignUp = (Button) view.findViewById(R.id.sign_up_button);
         inputEmail = (EditText) view.findViewById(R.id.email);
@@ -74,9 +86,27 @@ public class CreateAccFragment extends Fragment {
                 }
 
                 progressBar.setVisibility(View.VISIBLE);
-
+                System.out.println(email);
+                System.out.println(password);
+                auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                progressBar.setVisibility(View.GONE);
+                                if (!task.isSuccessful()) {
+                                    Toast.makeText(getActivity(), "Authentication failed." + task.getException(),
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    startActivity(new Intent(getActivity(), MainActivity.class));
+                                    getActivity().finish();
+                                }
+                            }
+                        });
             }
         });
+
+
+
 
         return view;
     }

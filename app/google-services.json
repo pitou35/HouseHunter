@@ -1,32 +1,49 @@
 {
   "project_info": {
-    "project_number": "113197914164",
-    "firebase_url": "https://househunter-a4c56.firebaseio.com",
-    "project_id": "househunter-a4c56",
-    "storage_bucket": "househunter-a4c56.appspot.com"
+    "project_number": "945297943483",
+    "firebase_url": "https://househunter-c5cfe.firebaseio.com",
+    "project_id": "househunter-c5cfe",
+    "storage_bucket": "househunter-c5cfe.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:113197914164:android:1225408136b575fb",
+        "mobilesdk_app_id": "1:945297943483:android:1225408136b575fb",
         "android_client_info": {
           "package_name": "com.example.pitou.househunter"
         }
       },
       "oauth_client": [
         {
-          "client_id": "113197914164-gmand12p7ie1bptrmrso7sgi658jlpop.apps.googleusercontent.com",
+          "client_id": "945297943483-jh90orm70626gtodnv37lqhe7q1tk0l2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pitou.househunter",
+            "certificate_hash": "0D90023AFCA44B61A9BE61E67E715A963C17F04D"
+          }
+        },
+        {
+          "client_id": "945297943483-t17587h55s1s380uk7hbv94om975uden.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
-      "api_key": [{ "current_key": "AIzaSyDbj-Cpb05cX0Y-IZDHMdCHjc5KMKugMuE" }],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6_lk8h57AW3GUDUa2UOYlinDW4ZlASvQ"
+        }
+      ],
       "services": {
         "analytics_service": {
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "945297943483-t17587h55s1s380uk7hbv94om975uden.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
