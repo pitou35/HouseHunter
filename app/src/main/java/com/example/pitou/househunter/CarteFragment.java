@@ -19,7 +19,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class CarteFragment extends Fragment{
+public class CarteFragment extends Fragment implements OnMapReadyCallback{
 
     MapView mMapView;
     private GoogleMap googleMap;
@@ -108,6 +108,11 @@ public class CarteFragment extends Fragment{
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
     }
 
     /**
