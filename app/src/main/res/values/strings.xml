@@ -35,4 +35,7 @@
     <string name="btn_sign_out">Se déconnecter</string>
     <string name="lbl_forgot_password">Mot de passe oublié?</string>
     <string name="forgot_password_msg">TEST.</string>
+
+    <string name="rechercher_lieu">Rechercher</string>
+    <string name="connection">Connection</string>
 </resources>
