@@ -40,6 +40,7 @@ public class CreateAccFragment extends Fragment {
                 .permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+
         View view= inflater.inflate(R.layout.fragment_create_acc, parent, false);
        auth=FirebaseAuth.getInstance();
 
