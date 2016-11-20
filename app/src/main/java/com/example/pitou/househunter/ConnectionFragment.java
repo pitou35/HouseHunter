@@ -40,8 +40,9 @@ public class ConnectionFragment extends Fragment {
         // Inflate the layout for this fragment
         auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
-            /*startActivity(new Intent(getActivity(), MainActivity.class));
-            getActivity().finish();*/
+            FragmentTransaction ft=getFragmentManager().beginTransaction();
+            ft.replace(R.id.current_fragment, new ProfilFragment());
+            ft.commit();
         }
         View view= inflater.inflate(R.layout.fragment_connection, parent, false);
 
@@ -57,7 +58,6 @@ public class ConnectionFragment extends Fragment {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO:changement fragment
                 FragmentTransaction ft=getFragmentManager().beginTransaction();
                 ft.replace(R.id.current_fragment, new CreateAccFragment());
                 ft.commit();
@@ -68,7 +68,9 @@ public class ConnectionFragment extends Fragment {
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO:a finir
+                FragmentTransaction ft=getFragmentManager().beginTransaction();
+                ft.replace(R.id.current_fragment, new ResetPasswordFragment());
+                ft.commit();
             }
         });
 
@@ -102,9 +104,9 @@ public class ConnectionFragment extends Fragment {
                                         Toast.makeText(getActivity(), getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                                     }
                                 } else {
-                                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                                    startActivity(intent);
-                                    getActivity().finish();
+                                    FragmentTransaction ft=getFragmentManager().beginTransaction();
+                                    ft.replace(R.id.current_fragment, new ProfilFragment());
+                                    ft.commit();
                                 }
                             }
                         });

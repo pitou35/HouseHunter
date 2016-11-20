@@ -52,14 +52,16 @@ public class CreateAccFragment extends Fragment {
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO:onclick
+                FragmentTransaction ft=getFragmentManager().beginTransaction();
+                ft.replace(R.id.current_fragment, new CreateAccFragment());
+                ft.commit();
             }
         });
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO:changement fragment
+                getActivity().finish();
 
             }
         });
