@@ -45,8 +45,6 @@ public class ConnectionFragment extends Fragment {
         }
         View view= inflater.inflate(R.layout.fragment_connection, parent, false);
 
-
-
         inputEmail = (EditText) view.findViewById(R.id.email);
         inputPassword = (EditText) view.findViewById(R.id.password);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
