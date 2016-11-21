@@ -1,18 +1,14 @@
 package com.example.pitou.househunter;
 
-import android.content.Context;
-import android.net.Uri;
+
 import android.os.Bundle;
 import android.app.Fragment;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
+
 
 import com.example.pitou.househunter.Adapters.AnnoncesAdapter;
 import com.example.pitou.househunter.model.Annonce;
@@ -58,12 +54,6 @@ public class ListeAnnonceFragment extends Fragment {
                         Log.i(TAG, "Value is: " + child.getValue(Annonce.class).getTitre());
                     Annonce value = child.getValue(Annonce.class);
                     adapter.add(value);
-                    String titre1 = value.getTitre();
-                    String description1 = value.getDescription();
-                    String adresse1 = value.getAdresse();
-                    Log.i(TAG, "titre "+ titre1);
-                    Log.i(TAG, "descri "+ description1);
-                    Log.i(TAG, "adresse " + adresse1);
                     ListView laliste = (ListView) view.findViewById(R.id.ListeAnnonces);
                     laliste.setAdapter(adapter);
 

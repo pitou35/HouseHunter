@@ -63,14 +63,84 @@
         android:layout_alignStart="@+id/TitreAnnonce"
         android:layout_marginTop="13dp" />
 
+    <TextView
+        android:text="Téléphone "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/AdressAnnonce"
+        android:layout_alignParentStart="true"
+        android:id="@+id/Ttel" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Téléphone "
+        android:ems="10"
+        android:layout_marginTop="14dp"
+        android:id="@+id/TelContact"
+        android:layout_below="@+id/Ttel"
+        android:layout_alignStart="@+id/AdressAnnonce" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TelContact"
+        android:layout_alignEnd="@+id/Ttel"
+        android:id="@+id/textView2" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Prix du logement"
+        android:ems="10"
+        android:layout_below="@+id/textView2"
+        android:layout_alignStart="@+id/TelContact"
+        android:id="@+id/prixLog" />
+
     <Button
         android:text="Ajouter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/AdressAnnonce"
-        android:layout_alignEnd="@+id/AdressAnnonce"
-        android:layout_marginEnd="41dp"
-        android:layout_marginTop="25dp"
-        android:id="@+id/Ajouter" />
+        android:id="@+id/Ajouter"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/prixLog" />
+
+    <TextView
+        android:text="Date de publication"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/prixLog"
+        android:layout_alignStart="@+id/textView2"
+        android:id="@+id/textView3" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:layout_below="@+id/textView3"
+        android:layout_alignStart="@+id/prixLog"
+        android:id="@+id/datePublication" />
+
+    <TextView
+        android:text="Disponibilité logement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/Ajouter"
+        android:layout_alignStart="@+id/textView3"
+        android:id="@+id/textView4" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:layout_alignBottom="@+id/Ajouter"
+        android:layout_alignStart="@+id/textView4"
+        android:id="@+id/disponibiliteLoge" />
 
 </RelativeLayout>

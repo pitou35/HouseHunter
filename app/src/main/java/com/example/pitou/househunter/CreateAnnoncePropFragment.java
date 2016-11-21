@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pitou.househunter.model.Annonce;
@@ -44,9 +44,13 @@ public class CreateAnnoncePropFragment extends Fragment {
         myRef = db.getReference("Annonces");
 
 
-        final EditText titre = (EditText) view.findViewById(R.id.TitreAnnonce);
-        final EditText description = (EditText) view.findViewById(R.id.DescriAnnonce);
-        final EditText adresse = (EditText) view.findViewById(R.id.AdressAnnonce);
+        final TextView titre = (TextView) view.findViewById(R.id.TitreAnnonce);
+        final TextView description = (TextView) view.findViewById(R.id.DescriAnnonce);
+        final TextView adresse = (TextView) view.findViewById(R.id.AdressAnnonce);
+        final TextView telephone = (TextView) view.findViewById(R.id.Telephone);
+        final TextView prixLog = (TextView) view.findViewById(R.id.PrixLogement);
+        final TextView datePub = (TextView) view.findViewById(R.id.datePub);
+        final TextView dateDispo = (TextView) view.findViewById(R.id.disponibilite);
         Button ajouter = (Button) view.findViewById(R.id.Ajouter);
 
         ajouter.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +60,11 @@ public class CreateAnnoncePropFragment extends Fragment {
                                            String titreA = titre.getText().toString();
                                            String descriptionA = description.getText().toString();
                                            String adresseA = adresse.getText().toString();
-                                           Annonce annonce = new Annonce(titreA, descriptionA, adresseA);
+                                           String telContact = telephone.getText().toString();
+                                           String prixLogement = prixLog.getText().toString();
+                                           String datePublication = datePub.getText().toString();
+                                           String dateDisponibilite = dateDispo.getText().toString();
+                                           Annonce annonce = new Annonce(titreA, descriptionA, adresseA, telContact, prixLogement, datePublication, dateDisponibilite);
                                            myRef.push().setValue(annonce);
 
                                            if (TextUtils.isEmpty(titreA)) {

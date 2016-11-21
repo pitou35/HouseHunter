@@ -34,9 +34,18 @@ public class AnnoncesAdapter  extends ArrayAdapter<Annonce> {
         TextView TitreAnnonce = (TextView) convertView.findViewById(R.id.TitreAnnonce);
         TextView DescriptionAnnonce = (TextView) convertView.findViewById(R.id.DescrAnnonce);
         TextView AdresseAnnonce = (TextView) convertView.findViewById(R.id.Adresse);
+        TextView telContact = (TextView) convertView.findViewById(R.id.Telephone);
+        TextView prixLogment = (TextView) convertView.findViewById(R.id.PrixLogement);
+        TextView datePublication = (TextView) convertView.findViewById(R.id.datePub);
+        TextView Dispnibilite = (TextView) convertView.findViewById(R.id.disponibilite);
         TitreAnnonce.setText(annonce.getTitre());
         DescriptionAnnonce.setText(annonce.getDescription());
         AdresseAnnonce.setText(annonce.getAdresse());
+        telContact.setText(annonce.getTelContact());
+        prixLogment.setText(annonce.getPrixLogment());
+        datePublication.setText(annonce.getDatePublication());
+        Dispnibilite.setText(annonce.getDatePublication());
+
 
         // Return the completed view to render on screen
         return convertView;

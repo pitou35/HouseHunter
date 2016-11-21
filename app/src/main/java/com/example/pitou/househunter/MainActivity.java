@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentTransaction ft=getFragmentManager().beginTransaction();
 
-        ft.replace(R.id.current_fragment, new ConnectionFragment());
+        ft.replace(R.id.current_fragment, new CreateAnnoncePropFragment());
 
         ft.commit();
     }
