@@ -11,6 +11,9 @@ public class Annonce {
     private String adresse;
 
 
+    public Annonce(){
+
+    }
 
     public Annonce(String titre, String description, String adresse) {
         this.titre = titre;
