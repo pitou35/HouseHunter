@@ -13,15 +13,14 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements CarteFragment.OnFragmentMapInteractionListener {
 
+    public static int ACCESS_FINE_LOCATION = 1; //Constate pour les permissions
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         FragmentTransaction ft=getFragmentManager().beginTransaction();
-
-        ft.replace(R.id.current_fragment, new CreateAnnoncePropFragment());
-
+        ft.replace(R.id.current_fragment, new CarteFragment());
         ft.commit();
     }
 

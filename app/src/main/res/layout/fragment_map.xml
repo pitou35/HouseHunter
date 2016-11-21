@@ -11,14 +11,6 @@
         android:layout_height="match_parent" />
 
     <Button
-        android:text="@string/connection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/buttonConnection" />
-
-    <Button
         android:text="@string/rechercher_lieu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,5 +28,13 @@
         android:layout_alignParentStart="true"
         android:id="@+id/editTextRecherche"
         android:layout_toStartOf="@+id/buttonRecherche" />
+
+    <Button
+        android:text="@string/connection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonConnection"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
