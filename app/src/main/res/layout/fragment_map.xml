@@ -30,7 +30,7 @@
         android:layout_toStartOf="@+id/buttonRecherche" />
 
     <Button
-        android:text="@string/connection"
+        android:text="@string/profil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonConnection"

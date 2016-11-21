@@ -45,7 +45,7 @@ public class CarteFragment extends Fragment {
     private ArrayList<Marker> annoncesMarkers;
 
     //On définit le listener de la région
-    private OnFragmentMapInteractionListener mListener;
+    //private OnFragmentMapInteractionListener mListener;
 
     /*public CarteFragment(){
 
@@ -141,7 +141,10 @@ public class CarteFragment extends Fragment {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onClickBtnConnection();
+                    //mListener.onClickBtnConnection();
+                    FragmentTransaction ft=getFragmentManager().beginTransaction();
+                    ft.replace(R.id.current_fragment, new ConnectionFragment());
+                    ft.commit();
                 }
             });
         }
@@ -149,7 +152,7 @@ public class CarteFragment extends Fragment {
     }
 
     /**Permet de rattacher les listeners utilisé par le fragment et implémenté par l'activité**/
-    @Override
+    /*@Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentMapInteractionListener) {
@@ -158,18 +161,18 @@ public class CarteFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
+    }*/
 
     /**
      * Interface qui liste les traitements appellées par les listeners qui seront à implémenter dans l'activité
      */
-    public interface OnFragmentMapInteractionListener {
+    /*public interface OnFragmentMapInteractionListener {
         void onClickBtnConnection(); //l'activité devra implémenter cette méthode avec:
-    }
+    }*/
 }

@@ -61,7 +61,9 @@ public class CreateAccFragment extends Fragment {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().finish();
+                FragmentTransaction ft=getFragmentManager().beginTransaction();
+                ft.replace(R.id.current_fragment, new ConnectionFragment());
+                ft.commit();
 
             }
         });
@@ -99,8 +101,9 @@ public class CreateAccFragment extends Fragment {
                                     Toast.makeText(getActivity(), "Authentification échouée." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 } else {
-                                    startActivity(new Intent(getActivity(), MainActivity.class));
-                                    getActivity().finish();
+                                    FragmentTransaction ft=getFragmentManager().beginTransaction();
+                                    ft.replace(R.id.current_fragment, new CarteFragment());
+                                    ft.commit();
                                 }
                             }
                         });
