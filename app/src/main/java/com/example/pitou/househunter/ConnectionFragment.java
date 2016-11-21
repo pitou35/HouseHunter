@@ -40,6 +40,7 @@ public class ConnectionFragment extends Fragment {
         // Inflate the layout for this fragment
         auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
+            System.out.println("ALREADY CONNECTED");
             FragmentTransaction ft=getFragmentManager().beginTransaction();
             ft.replace(R.id.current_fragment, new ProfilFragment());
             ft.commit();
