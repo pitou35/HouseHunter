@@ -12,6 +12,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -33,16 +36,20 @@ public class ConnectionFragment extends Fragment {
     private ProgressBar progressBar;
     private Button btnSignup, btnLogin, btnReset;
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent,
                              Bundle savedInstanceState) {
+
+        setHasOptionsMenu(true);
 
         // Inflate the layout for this fragment
         auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
             System.out.println("ALREADY CONNECTED");
             FragmentTransaction ft=getFragmentManager().beginTransaction();
-            ft.replace(R.id.current_fragment, new ProfilFragment());
+            ft.replace(R.id.current_fragment, new CarteFragment());
             ft.commit();
         }
         View view= inflater.inflate(R.layout.fragment_connection, parent, false);
@@ -104,7 +111,7 @@ public class ConnectionFragment extends Fragment {
                                     }
                                 } else {
                                     FragmentTransaction ft=getFragmentManager().beginTransaction();
-                                    ft.replace(R.id.current_fragment, new ProfilFragment());
+                                    ft.replace(R.id.current_fragment, new CarteFragment());
                                     ft.commit();
                                 }
                             }

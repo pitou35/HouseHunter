@@ -1,9 +1,12 @@
 package com.example.pitou.househunter;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,7 +28,7 @@ public class CarteFragment extends Fragment implements OnMapReadyCallback{
     private GoogleMap googleMap;
 
     //On définit le listener de la région
-    private OnFragmentMapInteractionListener mListener;
+    //private OnFragmentMapInteractionListener mListener;
 
     /*public CarteFragment(){
 
@@ -86,7 +89,9 @@ public class CarteFragment extends Fragment implements OnMapReadyCallback{
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickBtnConnection();
+                FragmentTransaction ft=getFragmentManager().beginTransaction();
+                ft.replace(R.id.current_fragment, new ProfilFragment());
+                ft.commit();
             }
         });
         return rootView;
@@ -96,18 +101,18 @@ public class CarteFragment extends Fragment implements OnMapReadyCallback{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentMapInteractionListener) {
+        /*if (context instanceof OnFragmentMapInteractionListener) {
             mListener = (OnFragmentMapInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
-        }
+        }*/
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+       // mListener = null;
     }
 
     @Override
@@ -115,10 +120,11 @@ public class CarteFragment extends Fragment implements OnMapReadyCallback{
 
     }
 
+
     /**
      * Interface qui liste les traitements appellées par les listeners qui seront à implémenter dans l'activité
      */
-    public interface OnFragmentMapInteractionListener {
+    /*public interface OnFragmentMapInteractionListener {
         void onClickBtnConnection(); //l'activité devra implémenter cette méthode avec:
-    }
+    }*/
 }
