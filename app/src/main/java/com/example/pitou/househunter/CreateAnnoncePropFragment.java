@@ -44,13 +44,13 @@ public class CreateAnnoncePropFragment extends Fragment {
         myRef = db.getReference("Annonces");
 
 
-        final TextView titre = (TextView) view.findViewById(R.id.TitreAnnonce);
-        final TextView description = (TextView) view.findViewById(R.id.DescriAnnonce);
-        final TextView adresse = (TextView) view.findViewById(R.id.AdressAnnonce);
-        final TextView telephone = (TextView) view.findViewById(R.id.Telephone);
-        final TextView prixLog = (TextView) view.findViewById(R.id.PrixLogement);
-        final TextView datePub = (TextView) view.findViewById(R.id.datePub);
-        final TextView dateDispo = (TextView) view.findViewById(R.id.disponibilite);
+        final TextView titre = (TextView) view.findViewById(R.id.ETitreAnnonce);
+        final TextView description = (TextView) view.findViewById(R.id.EDescriAnnonce);
+        final TextView adresse = (TextView) view.findViewById(R.id.EAdressAnnonce);
+        final TextView telephone = (TextView) view.findViewById(R.id.ETelContact);
+        final TextView prixLog = (TextView) view.findViewById(R.id.EprixLog);
+        final TextView datePub = (TextView) view.findViewById(R.id.EdatePublication);
+        final TextView dateDispo = (TextView) view.findViewById(R.id.EdisponibiliteLoge);
         Button ajouter = (Button) view.findViewById(R.id.Ajouter);
 
         ajouter.setOnClickListener(new View.OnClickListener() {

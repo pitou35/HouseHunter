@@ -21,14 +21,15 @@ public class Annonce {
 
     }
 
-    public Annonce(String titre, String disponibiliteLogement, String datePublication, String prixLogment, String telContact, String adresse, String description) {
+    public Annonce(String titre, String description,  String adresse, String telContact, String prixLogment, String datePublication, String disponibiliteLogement ) {
         this.titre = titre;
-        this.disponibiliteLogement = disponibiliteLogement;
-        this.datePublication = datePublication;
-        this.prixLogment = prixLogment;
-        this.telContact = telContact;
-        this.adresse = adresse;
         this.description = description;
+        this.adresse = adresse;
+        this.telContact = telContact;
+        this.prixLogment = prixLogment;
+        this.datePublication = datePublication;
+        this.disponibiliteLogement = disponibiliteLogement;
+
     }
 
     public Annonce(String titre, String description, String adresse) {

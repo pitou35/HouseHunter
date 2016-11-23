@@ -11,7 +11,7 @@
         android:text="Titre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/titre" />
+        android:id="@+id/Ttitre" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -19,26 +19,36 @@
         android:inputType="textPersonName"
         android:text="Titre de l'annonce"
         android:ems="10"
-        android:id="@+id/TitreAnnonce"
-        android:layout_below="@+id/titre"
-        android:layout_toEndOf="@+id/titre"
+        android:id="@+id/ETitreAnnonce"
+        android:layout_below="@+id/Ttitre"
+        android:layout_toEndOf="@+id/Ttitre"
         android:layout_marginTop="11dp" />
 
     <TextView
         android:text="Description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/description"
+        android:id="@+id/Tdescription"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/TitreAnnonce" />
+        android:layout_below="@+id/ETitreAnnonce" />
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Description de l'annonce"
+        android:ems="10"
+        android:id="@+id/EDescriAnnonce"
+        android:layout_below="@+id/Tdescription"
+        android:layout_alignStart="@+id/Tdescription"
+        android:layout_marginTop="13dp" />
     <TextView
         android:text="Adresse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/adresse"
+        android:id="@+id/Tadresse"
         android:layout_marginTop="12dp"
-        android:layout_below="@+id/DescriAnnonce"
+        android:layout_below="@+id/EDescriAnnonce"
         android:layout_alignParentStart="true" />
 
     <EditText
@@ -47,27 +57,17 @@
         android:inputType="textPersonName"
         android:text="Adresse de l'annonce"
         android:ems="10"
-        android:id="@+id/AdressAnnonce"
+        android:id="@+id/EAdressAnnonce"
         android:layout_marginTop="11dp"
-        android:layout_below="@+id/adresse"
-        android:layout_alignStart="@+id/DescriAnnonce" />
+        android:layout_below="@+id/Tadresse"
+         />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Description de l'annonce"
-        android:ems="10"
-        android:id="@+id/DescriAnnonce"
-        android:layout_below="@+id/description"
-        android:layout_alignStart="@+id/TitreAnnonce"
-        android:layout_marginTop="13dp" />
 
     <TextView
         android:text="Téléphone "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/AdressAnnonce"
+        android:layout_below="@+id/EAdressAnnonce"
         android:layout_alignParentStart="true"
         android:id="@+id/Ttel" />
 
@@ -78,15 +78,15 @@
         android:text="Téléphone "
         android:ems="10"
         android:layout_marginTop="14dp"
-        android:id="@+id/TelContact"
+        android:id="@+id/ETelContact"
         android:layout_below="@+id/Ttel"
-        android:layout_alignStart="@+id/AdressAnnonce" />
+       />
 
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/TelContact"
+        android:layout_below="@+id/ETelContact"
         android:layout_alignEnd="@+id/Ttel"
         android:id="@+id/textView2" />
 
@@ -97,23 +97,16 @@
         android:text="Prix du logement"
         android:ems="10"
         android:layout_below="@+id/textView2"
-        android:layout_alignStart="@+id/TelContact"
-        android:id="@+id/prixLog" />
+        android:layout_alignStart="@+id/ETelContact"
+        android:id="@+id/EprixLog" />
 
-    <Button
-        android:text="Ajouter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/Ajouter"
-        android:layout_marginBottom="20dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/prixLog" />
+
 
     <TextView
         android:text="Date de publication"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/prixLog"
+        android:layout_below="@+id/EprixLog"
         android:layout_alignStart="@+id/textView2"
         android:id="@+id/textView3" />
 
@@ -123,24 +116,33 @@
         android:inputType="date"
         android:ems="10"
         android:layout_below="@+id/textView3"
-        android:layout_alignStart="@+id/prixLog"
-        android:id="@+id/datePublication" />
+        android:id="@+id/EdatePublication" />
+
+    <Button
+        android:text="Ajouter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Ajouter"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="21dp" />
 
     <TextView
         android:text="Disponibilité logement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/Ajouter"
-        android:layout_alignStart="@+id/textView3"
-        android:id="@+id/textView4" />
+        android:id="@+id/textView4"
+        android:layout_below="@+id/EdatePublication"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="date"
         android:ems="10"
-        android:layout_alignBottom="@+id/Ajouter"
-        android:layout_alignStart="@+id/textView4"
-        android:id="@+id/disponibiliteLoge" />
+        android:id="@+id/EdisponibiliteLoge"
+        android:layout_below="@+id/textView4"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="12dp" />
 
 </RelativeLayout>
