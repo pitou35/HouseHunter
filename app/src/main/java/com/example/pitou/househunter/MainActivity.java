@@ -25,9 +25,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         FragmentTransaction ft=getFragmentManager().beginTransaction();
-
-
-        ft.replace(R.id.current_fragment, new ListeAnnonceFragment());
+        
+        ft.replace(R.id.current_fragment, new CarteFragment());
 
 
         ft.commit();

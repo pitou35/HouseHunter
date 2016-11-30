@@ -37,5 +37,6 @@
     <string name="forgot_password_msg">TEST.</string>
 
     <string name="rechercher_lieu">Rechercher</string>
+    <string name="loc">Par loc</string>
     <string name="profil">Profil</string>
 </resources>
