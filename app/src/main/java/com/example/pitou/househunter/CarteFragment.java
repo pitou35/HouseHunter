@@ -97,7 +97,7 @@ public class CarteFragment extends Fragment {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, new LocationListener() {
                 public void onLocationChanged(Location location) {
                     // Called when a new location is found by the network location provider.
-                    LatLng userPos = new LatLng(location.getLongitude(), location.getLatitude());
+                    LatLng userPos = new LatLng(location.getLatitude(), location.getLongitude());
                     if (googleMap != null && !search) {
                         //On supprime l'ancien marker si il existe
                         if (userMark != null) {
