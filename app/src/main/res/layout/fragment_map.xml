@@ -10,14 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <Button
-        android:text="@string/rechercher_lieu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonRecherche"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,5 +28,21 @@
         android:id="@+id/buttonConnection"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="@string/loc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/buttonLoc" />
+
+    <Button
+        android:text="@string/rechercher_lieu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonRecherche"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/buttonLoc" />
 
 </RelativeLayout>

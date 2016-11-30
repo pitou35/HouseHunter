@@ -7,6 +7,7 @@ import android.content.Context;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
@@ -21,7 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.identity.intents.Address;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -33,6 +34,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,6 +116,7 @@ public class CarteFragment extends Fragment {
                 }
 
                 public void onProviderEnabled(String provider) {
+                    search = false; //on indique qu'on ne se place plus en fonction d'une recherche mais de sa position
                 }
 
                 public void onProviderDisabled(String provider) {
@@ -154,12 +157,21 @@ public class CarteFragment extends Fragment {
                 }
             });
 
+            /*Listener bouton réactiver loc*/
+            Button buttonLoc = (Button) rootView.findViewById(R.id.buttonLoc);
+            buttonLoc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    search = false; //on indique qu'on ne se place plus en fonction d'une recherche mais de sa position
+                }
+            });
+
             /*Listener pour le bouton de recherche*/
-            Button buttonSearch = (Button)  rootView.findViewById(R.id.buttonConnection);
+            Button buttonSearch = (Button)  rootView.findViewById(R.id.buttonRecherche);
             buttonSearch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    /*// Perform action on click
+                    // Perform action on click
                     EditText editText = (EditText) rootView.findViewById(R.id.editTextRecherche);
                     String message = editText.getText().toString();
                     if (message.isEmpty()) {
@@ -170,17 +182,14 @@ public class CarteFragment extends Fragment {
                             //Liste d'adresse trouvé à partir du texte entré
                             List<Address> liste = gc.getFromLocationName(message, 5);
 
-                            // Par défaut on choisi la première adresse pour l'instant
+                            // On choisit la première adresse
                             if (liste != null && !liste.isEmpty()) {
                                 Address add = liste.get(0);
                                 String locality = add.getAddressLine(2); // 2 = Pays
                                 String ville = add.getAddressLine(1); // 1 = Code postale + Ville
                                 String adr = add.getAddressLine(0); // 0 = Adresse
-                                //String adresse = adr + " " + ville;
-                                Toast.makeText(v.getContext(), locality, Toast.LENGTH_LONG).show();
                                 double lat = add.getLatitude();
                                 double lgt = add.getLongitude();
-
                                 gotoLocation(lat, lgt, ville, adr);
                             } else {
                                 Toast.makeText(v.getContext(), "Adresse inconnue !", Toast.LENGTH_LONG).show();
@@ -188,7 +197,7 @@ public class CarteFragment extends Fragment {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                    }*/
+                    }
                 }
             });
         }
@@ -225,5 +234,20 @@ public class CarteFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         getActivity().finish();
         startActivity(intent);
+    }
+
+    //Méthode pour positionner le marker d'adresse à l'adresse entrée par le client
+    private void gotoLocation (double lat, double lgt, String add1, String add2){
+        LatLng ll = new LatLng(lat, lgt);
+        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, 12);
+        if (userMark != null){
+            userMark.remove();
+        }
+        userMark =googleMap.addMarker(new MarkerOptions()
+                .position(ll)
+                .title("Lieu")
+                .snippet(add2 + " " + add1));
+        search = true; //On indique qu'on a fait une recherche donc on cherche plus la position de l'utilisateur
+        googleMap.moveCamera(update);
     }
 }
