@@ -40,7 +40,7 @@ public class CreateAnnoncePropFragment extends Fragment {
 
         db = FirebaseDatabase.getInstance();
         auth=FirebaseAuth.getInstance();
-            auth.getCurrentUser();
+            auth.getCurrentUser().getUid();
         myRef = db.getReference("Annonces");
 
 
@@ -64,7 +64,7 @@ public class CreateAnnoncePropFragment extends Fragment {
                                            String prixLogement = prixLog.getText().toString();
                                            String datePublication = datePub.getText().toString();
                                            String dateDisponibilite = dateDispo.getText().toString();
-                                           Annonce annonce = new Annonce(titreA, descriptionA, adresseA, telContact, prixLogement, datePublication, dateDisponibilite);
+                                           Annonce annonce = new Annonce(titreA, descriptionA, adresseA, telContact, prixLogement, datePublication, dateDisponibilite,  auth.getCurrentUser().getUid());
                                            myRef.push().setValue(annonce);
 
                                            if (TextUtils.isEmpty(titreA)) {
