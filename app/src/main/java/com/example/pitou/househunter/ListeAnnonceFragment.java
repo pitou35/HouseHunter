@@ -1,12 +1,15 @@
 package com.example.pitou.househunter;
 
 
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 
@@ -32,6 +35,7 @@ public class ListeAnnonceFragment extends Fragment {
     private DatabaseReference myRef;
     private AnnoncesAdapter adapter;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,8 +47,10 @@ public class ListeAnnonceFragment extends Fragment {
         myRef = db.getReference("Annonces");
         ArrayList<Annonce> arrayOfAnnonces = new ArrayList<Annonce>();
         // Create the adapter to convert the array to views
+
         adapter = new AnnoncesAdapter(getContext(), arrayOfAnnonces);
         final View view= inflater.inflate(R.layout.fragment_liste_annonce, container, false);
+        Button NewAnnonce = (Button) view.findViewById(R.id.BNewAnnonce);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -68,7 +74,15 @@ public class ListeAnnonceFragment extends Fragment {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+        NewAnnonce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft=getFragmentManager().beginTransaction();
+                ft.replace(R.id.current_fragment, new CreateAnnoncePropFragment());
+                ft.commit();
 
+            }
+        });
 
         return view;
 

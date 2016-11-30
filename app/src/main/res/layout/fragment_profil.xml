@@ -101,7 +101,14 @@
             android:text="@string/change_password"
             android:textStyle="bold" />
 
-
+        <Button
+            android:id="@+id/BMesAnnones"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Mes annonces"
+            android:textStyle="bold" />
         <Button
             android:id="@+id/remove_user_button"
             style="?android:textAppearanceSmall"

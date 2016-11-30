@@ -15,4 +15,11 @@
         android:layout_height="match_parent"
         android:id="@+id/ListeAnnonces" />
 
+    <Button
+        android:text="Nouvelle annonce"
+        android:layout_width="141dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/BNewAnnonce" />
+
+
 </FrameLayout>

@@ -15,14 +15,14 @@ public class Annonce {
     private String prixLogment;
     private String datePublication;
     private String disponibiliteLogement;
-    private String idUser;
+   // private String idUser;
 
 
     public Annonce(){
 
     }
 
-    public Annonce(String titre, String description,  String adresse, String telContact, String prixLogment, String datePublication, String disponibiliteLogement, String idUser ) {
+    public Annonce(String titre, String description,  String adresse, String telContact, String prixLogment, String datePublication, String disponibiliteLogement) {
         this.titre = titre;
         this.description = description;
         this.adresse = adresse;
@@ -30,7 +30,7 @@ public class Annonce {
         this.prixLogment = prixLogment;
         this.datePublication = datePublication;
         this.disponibiliteLogement = disponibiliteLogement;
-        this.idUser = idUser;
+        //this.idUser = idUser;
 
 
     }
@@ -88,7 +88,7 @@ public class Annonce {
     public void setDisponibiliteLogement(String disponibiliteLogement) {
         this.disponibiliteLogement = disponibiliteLogement;
     }
-
+/*
     public String getIdUser() {
         return idUser;
     }
@@ -96,7 +96,7 @@ public class Annonce {
     public void setIdUser(String idUser) {
         this.idUser = idUser;
     }
-
+*/
     public String getDatePublication() {
         return datePublication;
     }

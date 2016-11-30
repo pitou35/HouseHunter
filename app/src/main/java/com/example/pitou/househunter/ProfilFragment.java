@@ -26,7 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class ProfilFragment extends Fragment {
 
     private Button  btnChangePassword, btnRemoveUser,
-             changePassword, remove, signOut;
+             changePassword, remove, signOut, BMesAnnones;
 
     private EditText password, newPassword;
     private ProgressBar progressBar;
@@ -64,7 +64,7 @@ public class ProfilFragment extends Fragment {
 
         remove = (Button) view.findViewById(R.id.remove);
         signOut = (Button) view.findViewById(R.id.sign_out);
-
+        BMesAnnones = (Button) view.findViewById(R.id.BMesAnnones);
 
         password = (EditText) view.findViewById(R.id.password);
         newPassword = (EditText) view.findViewById(R.id.newPassword);
