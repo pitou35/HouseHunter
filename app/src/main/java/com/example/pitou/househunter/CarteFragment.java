@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -43,6 +44,9 @@ public class CarteFragment extends Fragment {
     private Marker userMark;
     //Marker ds annnonces
     private ArrayList<Marker> annoncesMarkers;
+
+    private FirebaseAuth auth;
+
 
     //On définit le listener de la région
     //private OnFragmentMapInteractionListener mListener;
@@ -73,7 +77,7 @@ public class CarteFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_map, container, false);
-
+        auth=FirebaseAuth.getInstance();
         /**On verifie si les permissions sont valides**/
         if (ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -142,9 +146,16 @@ public class CarteFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     //mListener.onClickBtnConnection();
-                    FragmentTransaction ft=getFragmentManager().beginTransaction();
-                    ft.replace(R.id.current_fragment, new ConnectionFragment());
-                    ft.commit();
+                    if (auth!=null){
+                        FragmentTransaction ft=getFragmentManager().beginTransaction();
+                        ft.replace(R.id.current_fragment, new ProfilFragment());
+                        ft.commit();
+                    }else{
+                        FragmentTransaction ft=getFragmentManager().beginTransaction();
+                        ft.replace(R.id.current_fragment, new ConnectionFragment());
+                        ft.commit();
+                    }
+
                 }
             });
         }
