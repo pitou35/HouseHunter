@@ -5,7 +5,9 @@ import android.Manifest;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -16,7 +18,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.identity.intents.Address;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -30,6 +35,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -39,7 +45,7 @@ public class CarteFragment extends Fragment {
     MapView mMapView;
     private GoogleMap googleMap;
     //Indique si on a fait une recherche (pour le cas ou on a fait une recherche
-    private Boolean search= false;
+    private Boolean search = false;
     //Marker de l'utilisateur
     private Marker userMark;
     //Marker ds annnonces
@@ -85,20 +91,20 @@ public class CarteFragment extends Fragment {
                     MainActivity.ACCESS_FINE_LOCATION);
             ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                     MainActivity.ACCESS_FINE_LOCATION);
-            this.getActivity().recreate();
+            restartActivity();
         } else {
             /**On fait la localisation**/
             // Acquire a reference to the system Location Manager
-            LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+            final LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
             // Define a listener that responds to location updates
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 150, new LocationListener() {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, new LocationListener() {
                 public void onLocationChanged(Location location) {
                     // Called when a new location is found by the network location provider.
-                    LatLng userPos = new LatLng(location.getLongitude(),location.getLatitude());
-                    if(googleMap!= null && !search) {
+                    LatLng userPos = new LatLng(location.getLongitude(), location.getLatitude());
+                    if (googleMap != null && !search) {
                         //On supprime l'ancien marker si il existe
-                        if(userMark!= null){
+                        if (userMark != null) {
                             userMark.remove();
                         }
                         userMark = googleMap.addMarker(new MarkerOptions().position(userPos).title("Vous êtes ici"));
@@ -112,7 +118,6 @@ public class CarteFragment extends Fragment {
                 }
 
                 public void onProviderEnabled(String provider) {
-                    System.out.println("INFO:ACTIVATE");
                 }
 
                 public void onProviderDisabled(String provider) {
@@ -141,6 +146,7 @@ public class CarteFragment extends Fragment {
                 }
             });
 
+            /*Listener bouton connection*/
             Button button = (Button) rootView.findViewById(R.id.buttonConnection);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -156,6 +162,44 @@ public class CarteFragment extends Fragment {
                         ft.commit();
                     }
 
+                }
+            });
+
+            /*Listener pour le bouton de recherche*/
+            Button buttonSearch = (Button)  rootView.findViewById(R.id.buttonConnection);
+            buttonSearch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    /*// Perform action on click
+                    EditText editText = (EditText) rootView.findViewById(R.id.editTextRecherche);
+                    String message = editText.getText().toString();
+                    if (message.isEmpty()) {
+                        Toast.makeText(v.getContext(), "Entrez une adresse !", Toast.LENGTH_LONG).show();
+                    } else {
+                        Geocoder gc = new Geocoder(v.getContext());
+                        try {
+                            //Liste d'adresse trouvé à partir du texte entré
+                            List<Address> liste = gc.getFromLocationName(message, 5);
+
+                            // Par défaut on choisi la première adresse pour l'instant
+                            if (liste != null && !liste.isEmpty()) {
+                                Address add = liste.get(0);
+                                String locality = add.getAddressLine(2); // 2 = Pays
+                                String ville = add.getAddressLine(1); // 1 = Code postale + Ville
+                                String adr = add.getAddressLine(0); // 0 = Adresse
+                                //String adresse = adr + " " + ville;
+                                Toast.makeText(v.getContext(), locality, Toast.LENGTH_LONG).show();
+                                double lat = add.getLatitude();
+                                double lgt = add.getLongitude();
+
+                                gotoLocation(lat, lgt, ville, adr);
+                            } else {
+                                Toast.makeText(v.getContext(), "Adresse inconnue !", Toast.LENGTH_LONG).show();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }*/
                 }
             });
         }
@@ -186,4 +230,11 @@ public class CarteFragment extends Fragment {
     /*public interface OnFragmentMapInteractionListener {
         void onClickBtnConnection(); //l'activité devra implémenter cette méthode avec:
     }*/
+
+    /**Méthode pour redémarrer l'activité**/
+    private void restartActivity() {
+        Intent intent = getActivity().getIntent();
+        getActivity().finish();
+        startActivity(intent);
+    }
 }
