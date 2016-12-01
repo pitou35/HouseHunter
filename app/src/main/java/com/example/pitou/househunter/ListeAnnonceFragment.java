@@ -2,7 +2,6 @@ package com.example.pitou.househunter;
 
 
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -62,11 +61,7 @@ public class ListeAnnonceFragment extends Fragment {
                     adapter.add(value);
                     ListView laliste = (ListView) view.findViewById(R.id.ListeAnnonces);
                     laliste.setAdapter(adapter);
-
                 }
-
-
-
             }
             @Override
             public void onCancelled(DatabaseError error) {

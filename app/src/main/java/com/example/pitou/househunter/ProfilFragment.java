@@ -91,6 +91,15 @@ public class ProfilFragment extends Fragment {
             }
         });
 
+        BMesAnnones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft=getFragmentManager().beginTransaction();
+                ft.replace(R.id.current_fragment, new ListeAnnonceFragment());
+                ft.commit();
+            }
+        });
+
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
