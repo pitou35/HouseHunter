@@ -22,6 +22,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
+import com.firebase.geofire.GeoQueryEventListener;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -34,6 +38,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,6 +51,22 @@ import java.util.List;
  */
 public class CarteFragment extends Fragment {
 
+    /**
+     * Comment afficher les annonces
+     * 1)Création d'annonce: quand on fournit une adresse => on reprends L'objet Adresse et on retrouve les coordonnées qu'on sauvegarde
+     * dans Firebase (avec geofire)
+     * 2)Ici on utilise geofire qui va autour du user marker récuperer les annonces dans un rayon de 10 km
+     * 3)Pour chaque annonce récuperer on conserve son id et on affiche un marker avec les infos
+     * 4)Quand on clique sur ce marker on appelle le fragement pour ouvrir le détail
+     */
+    /**
+     * TODO: ajout marker (tableau + carte) quand geoquerie repére un element dans le rayon (mdf sur firebase)
+     * TODO: suppr marker (tableau + carte) quand geoquerie repére un element qui disparait dans le rayon (mdf sur firebase)
+     * TODO: mdf marker (tableau + carte) quand geoquerie repére un element qui bouge dans le rayon (mdf sur firebase)
+     * TODO: liens avec vrais id et affichage vrai info
+     * TODO: completer forumlaire ajout/mdf pour à partir de l'adresse stocker les coordonénes avec geoqueries
+     * TODO: mdf listener marker pour changer de fragement quand on clique sur un marker
+     */
     MapView mMapView;
     private GoogleMap googleMap;
     //Indique si on a fait une recherche (pour le cas ou on a fait une recherche
@@ -52,6 +75,12 @@ public class CarteFragment extends Fragment {
     private Marker userMark;
     //Marker ds annnonces
     private ArrayList<Marker> annoncesMarkers;
+    //Path des coordonnées des annonces
+    private String geoPath = "AnnoncesPos/";
+    GeoFire geoFire;
+    //Niveau zoom carte
+    private static int ZOOM_MAP=8;
+
 
     private FirebaseAuth auth;
 
@@ -111,7 +140,7 @@ public class CarteFragment extends Fragment {
                         }
                         userMark = googleMap.addMarker(new MarkerOptions().position(userPos).title("Vous êtes ici"));
                         // For zooming automatically to the location of the marker
-                        CameraPosition cameraPosition = new CameraPosition.Builder().target(userPos).zoom(8).build();
+                        CameraPosition cameraPosition = new CameraPosition.Builder().target(userPos).zoom(ZOOM_MAP).build();
                         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                     }
                 }
@@ -127,6 +156,7 @@ public class CarteFragment extends Fragment {
                 }
             });
 
+            /**On genere et gere la carte google**/
             //On récupére la map view
             mMapView = (MapView) rootView.findViewById(R.id.mapView);
             mMapView.onCreate(savedInstanceState);
@@ -149,6 +179,18 @@ public class CarteFragment extends Fragment {
                 }
             });
 
+            /**Gestion de geofire: pour afficher les annonces autours de notre positiion**/
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference(geoPath);
+            geoFire = new GeoFire(ref);
+
+            /*TEMPO: données de test**/
+            geoFire.setLocation("id1", new GeoLocation(48.083328, -1.68333));
+            geoFire.setLocation("id2", new GeoLocation(48.083028, -1.67333));
+            geoFire.setLocation("id3", new GeoLocation(48.082728, -1.66333));
+            geoFire.setLocation("id4", new GeoLocation(48.084428, -1.68333));
+
+
+            /**Listeners**/
             /*Listener bouton connection*/
             Button button = (Button) rootView.findViewById(R.id.buttonConnection);
             button.setOnClickListener(new View.OnClickListener() {
@@ -247,10 +289,40 @@ public class CarteFragment extends Fragment {
         startActivity(intent);
     }
 
+    /**Méthode pour activer un geoquerie: c'est a dire utiliser geoFire pour reperer autour du markeruser les annonces**/
+    private void launchQuerie(long lat,long longit) {
+    GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(lat, longit), 10.0);
+    geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
+          //Cas element entrée dans le radius (ou trouvé)
+          @Override
+          public void onKeyEntered(String key, GeoLocation location) {
+              //TODO: Ajout marker
+          }
+          //Cas element sort
+          @Override
+          public void onKeyExited(String key) {
+              //TODO: Suppression marker
+          }
+
+          //Cas element bouge
+          @Override
+          public void onKeyMoved(String key, GeoLocation location) {
+              //TODO: Suppression puis ra-ajout marker
+          }
+
+          @Override
+          public void onGeoQueryReady() {
+          }
+
+          @Override
+          public void onGeoQueryError(DatabaseError error) {
+          }
+      });
+    }
     //Méthode pour positionner le marker d'adresse à l'adresse entrée par le client
     private void gotoLocation (double lat, double lgt, String add1, String add2){
         LatLng ll = new LatLng(lat, lgt);
-        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, 12);
+        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, ZOOM_MAP);
         if (userMark != null){
             userMark.remove();
         }
