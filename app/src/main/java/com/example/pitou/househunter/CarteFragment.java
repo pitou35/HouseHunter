@@ -142,6 +142,7 @@ public class CarteFragment extends Fragment {
                         // For zooming automatically to the location of the marker
                         CameraPosition cameraPosition = new CameraPosition.Builder().target(userPos).zoom(ZOOM_MAP).build();
                         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                        launchQuerie(location.getLatitude(), location.getLongitude());
                     }
                 }
 
@@ -290,12 +291,13 @@ public class CarteFragment extends Fragment {
     }
 
     /**Méthode pour activer un geoquerie: c'est a dire utiliser geoFire pour reperer autour du markeruser les annonces**/
-    private void launchQuerie(long lat,long longit) {
+    private void launchQuerie(double lat,double longit) {
     GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(lat, longit), 10.0);
     geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
           //Cas element entrée dans le radius (ou trouvé)
           @Override
           public void onKeyEntered(String key, GeoLocation location) {
+              System.out.println("INFO: Dans ton coin: "+key);
               //TODO: Ajout marker
           }
           //Cas element sort
@@ -312,6 +314,7 @@ public class CarteFragment extends Fragment {
 
           @Override
           public void onGeoQueryReady() {
+              System.out.println("INFO: REQUETE PRETE");
           }
 
           @Override
@@ -332,5 +335,6 @@ public class CarteFragment extends Fragment {
                 .snippet(add2 + " " + add1));
         search = true; //On indique qu'on a fait une recherche donc on cherche plus la position de l'utilisateur
         googleMap.moveCamera(update);
+        launchQuerie(lat,lgt);
     }
 }
