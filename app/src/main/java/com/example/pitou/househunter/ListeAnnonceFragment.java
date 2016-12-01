@@ -39,16 +39,18 @@ public class ListeAnnonceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        final View view= inflater.inflate(R.layout.fragment_liste_annonce, container, false);
 
         db = FirebaseDatabase.getInstance();
         auth=FirebaseAuth.getInstance();
         auth.getCurrentUser();
         myRef = db.getReference("Annonces");
+
         ArrayList<Annonce> arrayOfAnnonces = new ArrayList<Annonce>();
         // Create the adapter to convert the array to views
 
         adapter = new AnnoncesAdapter(getContext(), arrayOfAnnonces);
-        final View view= inflater.inflate(R.layout.fragment_liste_annonce, container, false);
+
         Button NewAnnonce = (Button) view.findViewById(R.id.BNewAnnonce);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override

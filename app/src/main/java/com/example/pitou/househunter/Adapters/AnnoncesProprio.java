@@ -13,11 +13,12 @@ import com.example.pitou.househunter.model.Annonce;
 import java.util.ArrayList;
 
 /**
- * Created by kaoutar on 21/11/2016.
+ * Created by kaoutar on 01/12/2016.
  */
 
-public class AnnoncesAdapter  extends ArrayAdapter<Annonce> {
-    public AnnoncesAdapter(Context context, ArrayList<Annonce> annonces) {
+public class AnnoncesProprio extends ArrayAdapter<Annonce> {
+
+    public AnnoncesProprio(Context context, ArrayList<Annonce> annonces) {
         super(context, 0, annonces);
     }
 
