@@ -33,6 +33,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -44,6 +45,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -60,11 +62,12 @@ public class CarteFragment extends Fragment {
      * 4)Quand on clique sur ce marker on appelle le fragement pour ouvrir le détail
      */
     /**
-     * TODO: ajout marker (tableau + carte) quand geoquerie repére un element dans le rayon (mdf sur firebase)
-     * TODO: suppr marker (tableau + carte) quand geoquerie repére un element qui disparait dans le rayon (mdf sur firebase)
-     * TODO: mdf marker (tableau + carte) quand geoquerie repére un element qui bouge dans le rayon (mdf sur firebase)
-     * TODO: liens avec vrais id et affichage vrai info
-     * TODO: completer forumlaire ajout/mdf pour à partir de l'adresse stocker les coordonénes avec geoqueries
+     * DONE: ajout marker (carte) quand geoquerie repére un element dans le rayon (mdf sur firebase)
+     * DONE: suppr marker (carte) quand geoquerie repére un element qui disparait dans le rayon (mdf sur firebase)
+     * DONE: mdf marker (carte) quand geoquerie repére un element qui bouge dans le rayon (mdf sur firebase)
+     * TODO: barre pour regler le rayon
+     * TODO: liens entre les coordonnées avec les vrais id et afficher de vrai info
+     * TODO: completer formulaire ajout/mdf pour à partir de l'adresse determiner puis stocker les coordonnées avec geoqueries
      * TODO: mdf listener marker pour changer de fragement quand on clique sur un marker
      */
     MapView mMapView;
@@ -74,7 +77,7 @@ public class CarteFragment extends Fragment {
     //Marker de l'utilisateur
     private Marker userMark;
     //Marker ds annnonces
-    private ArrayList<Marker> annoncesMarkers;
+    private HashMap<String,Marker> annoncesMarkers;
     //Path des coordonnées des annonces
     private String geoPath = "AnnoncesPos/";
     GeoFire geoFire;
@@ -161,7 +164,8 @@ public class CarteFragment extends Fragment {
             //On récupére la map view
             mMapView = (MapView) rootView.findViewById(R.id.mapView);
             mMapView.onCreate(savedInstanceState);
-
+            //On initialise la hashmpa des markers d'annonces
+            annoncesMarkers = new HashMap<String,Marker>();
             mMapView.onResume(); //On l'affiche
             try {
                 MapsInitializer.initialize(getActivity().getApplicationContext());
@@ -297,19 +301,48 @@ public class CarteFragment extends Fragment {
           //Cas element entrée dans le radius (ou trouvé)
           @Override
           public void onKeyEntered(String key, GeoLocation location) {
-              System.out.println("INFO: Dans ton coin: "+key);
-              //TODO: Ajout marker
+              //Si jamais il reste une trace pour cette annonce on la supprime
+              if (annoncesMarkers.get(key) != null) {
+                  annoncesMarkers.get(key).remove(); //on supprime le marker
+                  annoncesMarkers.remove(key);
+              }
+              //Maj carte (ajout marqueur)
+              LatLng loc = new LatLng(location.latitude, location.longitude);
+              annoncesMarkers.put(key, googleMap.addMarker(new MarkerOptions()
+                      .position(loc)
+                      .title(key)
+                      .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                      //.icon(BitmapDescriptorFactory.fromResource(R.drawable.taxi))
+                      .snippet(key)
+              )); //Ajout du nouveau marker
           }
           //Cas element sort
           @Override
           public void onKeyExited(String key) {
-              //TODO: Suppression marker
+              //Recuperer dans la liste des markers, le marker qui a la clé et le supprimer
+              if (annoncesMarkers.get(key)!=null) {
+                  annoncesMarkers.get(key).remove();
+                  annoncesMarkers.remove(key);
+              }
           }
 
           //Cas element bouge
           @Override
           public void onKeyMoved(String key, GeoLocation location) {
-              //TODO: Suppression puis ra-ajout marker
+              //Si jamais il reste une trace pour cette annonce on la supprime
+              if (annoncesMarkers.get(key) != null) {
+                  annoncesMarkers.get(key).remove(); //on supprime le marker
+                  annoncesMarkers.remove(key);
+              }
+              //Maj carte (ajout marqueur)
+              LatLng loc = new LatLng(location.latitude, location.longitude);
+              annoncesMarkers.put(key, googleMap.addMarker(new MarkerOptions()
+                      .position(loc)
+                      .title(key)
+                      .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                      //.icon(BitmapDescriptorFactory.fromResource(R.drawable.taxi))
+                      .snippet(key)
+              )); //Ajout du nouveau marker
           }
 
           @Override

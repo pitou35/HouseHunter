@@ -45,4 +45,18 @@
         android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/buttonLoc" />
 
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:background="@null"
+        android:indeterminate="false"
+        android:max="2"
+        android:splitTrack="false"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/editTextRecherche"
+        style="@style/Widget.AppCompat.SeekBar" />
+
 </RelativeLayout>
