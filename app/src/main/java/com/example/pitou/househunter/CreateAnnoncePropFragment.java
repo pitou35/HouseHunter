@@ -81,7 +81,7 @@ public class CreateAnnoncePropFragment extends Fragment {
                                                @Override
                                                public void onDataChange(DataSnapshot snapshot) {
                                                    if (snapshot.exists()) {
-                                                       Toast.makeText(getContext(), "Generation id déja pris: recommencez svp", Toast.LENGTH_SHORT).show();
+                                                       Toast.makeText(getContext(), "Erreur generation id automatique: recommencez svp", Toast.LENGTH_SHORT).show();
                                                    }else{
                                                        myRef.child(idAnnonce).setValue(annonce);
                                                    }
@@ -123,7 +123,6 @@ public class CreateAnnoncePropFragment extends Fragment {
                                                    e.printStackTrace();
                                                }
                                            }
-
 
                                            FragmentTransaction ft=getFragmentManager().beginTransaction();
                                            ft.replace(R.id.current_fragment, new ListeAnnonceFragment());

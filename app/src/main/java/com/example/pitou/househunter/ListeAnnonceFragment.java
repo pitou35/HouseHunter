@@ -28,11 +28,18 @@ import static com.google.android.gms.internal.zzs.TAG;
 
 public class ListeAnnonceFragment extends Fragment {
 
-
+    /**NOTE IMPORTANTE: J'ai fait passer les ids des annonces à lister en paramêtre de ce fragement:
+     * les ids des annonces à afficher sont stocké dans idAnn **/
+    /**NOTE 2: IL SEMBLE QUE LE BOUTON AJOUTER (PRESENT ICI) DOIT ETRE dans ListeAnnoncePropFragement
+     * (ici c'est la liste d'affichage pas la liste pour les propriétaires)*/
     private FirebaseDatabase db;
     private FirebaseAuth auth;
     private DatabaseReference myRef;
     private AnnoncesAdapter adapter;
+    //On déclare le nom du paramêtres reçu qui recevra la liste des id des annonces à afficher
+    private final static String ARG_ID= "annonces";
+    //On déclare un tableau qui va contenir les annonces à afficher
+    private ArrayList<String> idAnn = new ArrayList<>();
 
 
     @Override
@@ -46,6 +53,12 @@ public class ListeAnnonceFragment extends Fragment {
         auth.getCurrentUser();
         myRef = db.getReference("Annonces");
 
+        //Test pour voir si on reçoit bien les annonces à afficher
+        if (idAnn != null && !idAnn.isEmpty()){
+            for(String id: idAnn){
+                System.out.println("Annonce à afficher: "+ id);
+            }
+        }
         ArrayList<Annonce> arrayOfAnnonces = new ArrayList<Annonce>();
         // Create the adapter to convert the array to views
 
@@ -85,6 +98,22 @@ public class ListeAnnonceFragment extends Fragment {
 
     }
 
+    /**Méthode appelle lors de la créatino du fragement**/
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            idAnn = getArguments().getStringArrayList(ARG_ID);//On va stocker le paramêtre reçu dans une variable
+        }
+    }
 
+    /**Méthode pour appeller ce fragement en lui fournissant une liste d'annonce (de paramêtre)**/
+    public static  ListeAnnonceFragment newInstance(ArrayList<String> listeIdAnnonce) {
+        ListeAnnonceFragment fragment = new  ListeAnnonceFragment(); //On crée notre fragement
+        Bundle args = new Bundle(); //On creer un bundle de paramêtres
+        args.putStringArrayList(ARG_ID, listeIdAnnonce); //On rajoute dans nos paramêtres
+        fragment.setArguments(args); //On rattache le bundle de paramêtres aux fragement
+        return fragment;
+    }
 
 }

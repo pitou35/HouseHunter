@@ -1,6 +1,5 @@
 package com.example.pitou.househunter;
 
-import android.*;
 import android.Manifest;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -14,7 +13,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +30,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -47,6 +44,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -65,9 +63,9 @@ public class CarteFragment extends Fragment {
      * DONE: ajout marker (carte) quand geoquerie repére un element dans le rayon (mdf sur firebase)
      * DONE: suppr marker (carte) quand geoquerie repére un element qui disparait dans le rayon (mdf sur firebase)
      * DONE: mdf marker (carte) quand geoquerie repére un element qui bouge dans le rayon (mdf sur firebase)
-     * TODO: barre pour regler le rayon
-     * TODO: liens entre les coordonnées avec les vrais id et afficher de vrai info
-     * TODO: completer formulaire ajout/mdf pour à partir de l'adresse determiner puis stocker les coordonnées avec geoqueries
+     * CANCEL: barre pour regler le rayon
+     * DONE: liens entre les coordonnées avec les vrais id
+     * DONE: completer formulaire ajout/mdf pour à partir de l'adresse determiner puis stocker les coordonnées avec geoqueries
      * TODO: mdf listener marker pour changer de fragement quand on clique sur un marker
      */
     MapView mMapView;
@@ -80,10 +78,10 @@ public class CarteFragment extends Fragment {
     private HashMap<String,Marker> annoncesMarkers;
     //Path des coordonnées des annonces
     private String geoPath = "AnnoncesPos/";
+    //GeoFire qu'on va utiliser pour les Annonces
     GeoFire geoFire;
     //Niveau zoom carte
-    private static int ZOOM_MAP=8;
-
+    private static int ZOOM_MAP=12;
 
     private FirebaseAuth auth;
 
@@ -165,7 +163,7 @@ public class CarteFragment extends Fragment {
             mMapView = (MapView) rootView.findViewById(R.id.mapView);
             mMapView.onCreate(savedInstanceState);
             //On initialise la hashmpa des markers d'annonces
-            annoncesMarkers = new HashMap<String,Marker>();
+            annoncesMarkers = new HashMap<>();
             mMapView.onResume(); //On l'affiche
             try {
                 MapsInitializer.initialize(getActivity().getApplicationContext());
@@ -181,6 +179,39 @@ public class CarteFragment extends Fragment {
                     googleMap = mMap;
                     //On rajoute le zoom
                     googleMap.getUiSettings().setZoomControlsEnabled(true);
+                    googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener(){
+                        /**Méthode pour réagir au interaction sur les markers**/
+                        @Override
+                        public boolean onMarkerClick(final Marker marker) {
+                            //Si c'est le marker de l'utilisateur: on fait rien de particulier
+                            if(marker.equals(userMark)) {
+                                return false; //true = on conserve l'interaction de base
+                                //Sinon c'est une annonce:
+                               /*Comme plusieurs annonces peuveut avoir les memes adresses/coordonnees alors on va appeller un
+                               fragment pour afficher une liste de ces annonces: on va donc récuperer tout les markers
+                               qui ont les mêmes coordonnées et on va récuperer leur titres(=id des annonces) qu'on envoie à cette
+                               liste.
+                                */
+                            }else{
+                                ArrayList<String> idAnn = new ArrayList<>();
+                                for (Map.Entry<String, Marker> entry : annoncesMarkers.entrySet()){
+                                    Marker m = entry.getValue();
+                                    if (m.getPosition().equals(marker.getPosition())){
+                                        idAnn.add(m.getTitle());
+                                    }
+                                }
+                                System.out.println(idAnn);
+                                /**Initialisation du fragment webview**/
+                                ListeAnnonceFragment lstAnnonce =  ListeAnnonceFragment.newInstance(idAnn); //on utilise l'instance et on fournit la valeur attendus dans l'instance
+                                /**Ajout d'un fragement**/
+                                //Début transaction avec une classe précise
+                                FragmentTransaction ft=getFragmentManager().beginTransaction();
+                                ft.replace(R.id.current_fragment, lstAnnonce);
+                                ft.commit();
+                                return true; //false pour garder l'interaction de base (titre du marqueur)
+                            }
+                        }
+                    }); //on indique que les m&eacute;thodes pour le click sur les markers est d&eacute;finit dans notre classe
                 }
             });
 
@@ -236,7 +267,7 @@ public class CarteFragment extends Fragment {
                             // On choisit la première adresse
                             if (liste != null && !liste.isEmpty()) {
                                 Address add = liste.get(0);
-                                String locality = add.getAddressLine(2); // 2 = Pays
+                                //String locality = add.getAddressLine(2); // 2 = Pays
                                 String ville = add.getAddressLine(1); // 1 = Code postale + Ville
                                 String adr = add.getAddressLine(0); // 0 = Adresse
                                 double lat = add.getLatitude();
@@ -348,7 +379,8 @@ public class CarteFragment extends Fragment {
           }
       });
     }
-    //Méthode pour positionner le marker d'adresse à l'adresse entrée par le client
+
+    /**Méthode pour positionner le marker d'adresse à l'adresse entrée par le client**/
     private void gotoLocation (double lat, double lgt, String add1, String add2){
         LatLng ll = new LatLng(lat, lgt);
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, ZOOM_MAP);
