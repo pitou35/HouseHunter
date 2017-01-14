@@ -188,13 +188,6 @@ public class CarteFragment extends Fragment {
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference(geoPath);
             geoFire = new GeoFire(ref);
 
-            /*TEMPO: données de test**/
-            geoFire.setLocation("id1", new GeoLocation(48.083328, -1.68333));
-            geoFire.setLocation("id2", new GeoLocation(48.083028, -1.67333));
-            geoFire.setLocation("id3", new GeoLocation(48.082728, -1.66333));
-            geoFire.setLocation("id4", new GeoLocation(48.084428, -1.68333));
-
-
             /**Listeners**/
             /*Listener bouton connection*/
             Button button = (Button) rootView.findViewById(R.id.buttonConnection);

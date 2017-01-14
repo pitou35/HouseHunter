@@ -58,7 +58,7 @@ public class ListeAnnonceFragment extends Fragment {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 for (DataSnapshot child : dataSnapshot.getChildren()){
-                        Log.i(TAG, "Value is: " + child.getValue(Annonce.class).getTitre());
+                        //Log.i(TAG, "Value is: " + child.getValue(Annonce.class).getTitre());
                     Annonce value = child.getValue(Annonce.class);
                     adapter.add(value);
                     ListView laliste = (ListView) view.findViewById(R.id.ListeAnnonces);
