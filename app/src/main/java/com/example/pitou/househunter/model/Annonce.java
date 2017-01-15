@@ -16,6 +16,7 @@ public class Annonce {
     private String datePublication;
     private String disponibiliteLogement;
     private String idUser;
+    private String idAnnonce;//id annonce
 
 
     public Annonce(){
@@ -104,4 +105,7 @@ public class Annonce {
     public void setDatePublication(String datePublication) {
         this.datePublication = datePublication;
     }
+
+    public String getIdAnnonce(){ return idAnnonce;}
+    public void setIdAnnonce(String idAnnonce) {this.idAnnonce = idAnnonce;}
 }

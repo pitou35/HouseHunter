@@ -1,15 +1,19 @@
 package com.example.pitou.househunter;
 
 
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import com.example.pitou.househunter.Adapters.AnnoncesAdapter;
@@ -72,7 +76,7 @@ public class ListeAnnonceFragment extends Fragment {
         ArrayList<Annonce> arrayOfAnnonces = new ArrayList<Annonce>();
         // Create the adapter to convert the array to views
 
-        adapter = new AnnoncesAdapter(getContext(), arrayOfAnnonces);
+        adapter = new AnnoncesAdapter(getContext(), arrayOfAnnonces, ListeAnnonceFragment.this);
 
         Button NewAnnonce = (Button) view.findViewById(R.id.BNewAnnonce);
 
@@ -85,13 +89,11 @@ public class ListeAnnonceFragment extends Fragment {
                 for (DataSnapshot child : dataSnapshot.getChildren()){
                         //Log.i(TAG, "Value is: " + child.getValue(Annonce.class).getTitre());
                     Annonce value = child.getValue(Annonce.class);
-                    System.out.println("**************");
-                    System.out.println(value.getIdUser());
-                    System.out.println(auth.getCurrentUser().getUid());
-                    System.out.println(value.getAdresse());
                     if( value.getIdUser().equals(auth.getCurrentUser().getUid())) {
                         adapter.add(value);
                     }
+                    value.setIdAnnonce(child.getKey());
+                    //adapter.add(value);
                     ListView laliste = (ListView) view.findViewById(R.id.ListeAnnonces);
                     laliste.setAdapter(adapter);
                 }
@@ -132,6 +134,48 @@ public class ListeAnnonceFragment extends Fragment {
         args.putStringArrayList(ARG_ID, listeIdAnnonce); //On rajoute dans nos paramêtres
         fragment.setArguments(args); //On rattache le bundle de paramêtres aux fragement
         return fragment;
+    }
+
+    /**
+     * appel le fragment qui affiche les details d'un annonce,
+     * @param idAnnonce : cet paramettre sert pour afficher les informations de l'annonce demandé
+     */
+    public void callDetailAnnonceFragment(String idAnnonce){
+        DetailAnnonceFragment details = new DetailAnnonceFragment();
+        FragmentTransaction ft= getFragmentManager().beginTransaction();
+        details.setIdAnnonce(idAnnonce);
+        ft.replace(R.id.current_fragment, details);
+        ft.commit();
+    }
+
+    /**
+     * montre message de confirmation si l'utilisateur clique sur
+     *oui: l'application efface de la base de donnés l'annonce selectionné, on met a jour le fragment qui contient
+     * la liste d'annonces apres l'effacement d'un annonce
+     * sinon le message de confirmation est fermé
+     * @param idAnnonce: permet de savoir quel annonce il faut effacer
+     */
+    public void createAndShowAlertDialog(String idAnnonce) {
+        final String idAnnonceEffacer = idAnnonce;
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Voulez vous effacer l'annonce?");
+        builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //supprimer l'annonce de la BD
+                myRef.child(idAnnonceEffacer).removeValue();
+                //mettre a jour le listview des annonces (mettre a jour le fragment)
+                FragmentTransaction ft= getFragmentManager().beginTransaction();
+                ft.replace(R.id.current_fragment, new ListeAnnonceFragment());
+                ft.commit();
+            }
+        });
+        builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 }

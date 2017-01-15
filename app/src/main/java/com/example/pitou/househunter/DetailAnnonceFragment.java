@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.pitou.househunter.Adapters.AnnoncesAdapter;
 import com.example.pitou.househunter.model.Annonce;
@@ -26,12 +27,12 @@ import static com.google.android.gms.internal.zzs.TAG;
 public class DetailAnnonceFragment extends Fragment {
 
    //elements de l'interface
-    private EditText titreAnnonce;
-    private EditText descriptionAnnonce;
-    private EditText adresse;
-    private EditText prixLogement;
-    private EditText telContact;
-    private EditText disponibilite;
+    private TextView titreAnnonce;
+    private TextView descriptionAnnonce;
+    private TextView adresse;
+    private TextView prixLogement;
+    private TextView telContact;
+    private TextView disponibilite;
 
 
     //conexion bd
@@ -44,7 +45,8 @@ public class DetailAnnonceFragment extends Fragment {
         // Required empty public constructor
     }
 
-
+    public String getIdAnnonce(){return idAnnonce;}
+    public void setIdAnnonce(String idAnnonce){this.idAnnonce = idAnnonce;}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,12 +60,13 @@ public class DetailAnnonceFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_detail_annonce, container, false);
 
-        titreAnnonce = (EditText) view.findViewById(R.id.txtTitre);
-        descriptionAnnonce = (EditText) view.findViewById(R.id.txtDescription);
-        adresse = (EditText) view.findViewById(R.id.txtAdresse);
-        prixLogement = (EditText) view.findViewById(R.id.txtPrix);
-        telContact = (EditText) view.findViewById(R.id.txtContact);
-        disponibilite = (EditText) view.findViewById(R.id.txtDisponibilite);
+        titreAnnonce = (TextView) view.findViewById(R.id.textTitre);
+        descriptionAnnonce = (TextView) view.findViewById(R.id.textDescription);
+        adresse = (TextView) view.findViewById(R.id.textAdresse);
+        prixLogement = (TextView) view.findViewById(R.id.textPrix);
+        telContact = (TextView) view.findViewById(R.id.textContact);
+        disponibilite = (TextView) view.findViewById(R.id.textDisponibilite);
+
 
 
         myRef.addValueEventListener(new ValueEventListener() {
@@ -74,13 +77,15 @@ public class DetailAnnonceFragment extends Fragment {
                 for (DataSnapshot child : dataSnapshot.getChildren()){
                     Log.i(TAG, "Value is: " + child.getValue(Annonce.class).getTitre());
                     Annonce value = child.getValue(Annonce.class);
-                    if(child.getKey().equals("-KXGT9i-36bXX5DCCApg")){
+
+                    //afficher details de l'annonce
+                    if(child.getKey().equals(idAnnonce)){
                         titreAnnonce.setText(value.getTitre());
-                        descriptionAnnonce.setText(value.getDescription());
-                        prixLogement.setText(value.getPrixLogment());
-                        telContact.setText(value.getTelContact());
-                        disponibilite.setText(value.getDisponibiliteLogement());
-                        adresse.setText(value.getAdresse());
+                        descriptionAnnonce.setText("Description: "+value.getDescription());
+                        prixLogement.setText("Prix: "+value.getPrixLogment());
+                        telContact.setText("Contact: "+value.getTelContact());
+                        disponibilite.setText("Disponibilité: "+value.getDisponibiliteLogement());
+                        adresse.setText("Adresse: "+value.getAdresse());
                     }
 
 
