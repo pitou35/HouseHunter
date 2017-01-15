@@ -32,10 +32,17 @@ public class ListeAnnonceFragment extends Fragment {
      * les ids des annonces à afficher sont stocké dans idAnn **/
     /**NOTE 2: IL SEMBLE QUE LE BOUTON AJOUTER (PRESENT ICI) DOIT ETRE dans ListeAnnoncePropFragement
      * (ici c'est la liste d'affichage pas la liste pour les propriétaires)*/
+    /*
+    les variables qui représentes les tables de la base de données
+     */
     private FirebaseDatabase db;
     private FirebaseAuth auth;
     private DatabaseReference myRef;
+    /*
+    La variable qui représente l'adapter de la liste des annonces avec le modèle de l'annonce.
+     */
     private AnnoncesAdapter adapter;
+
     //On déclare le nom du paramêtres reçu qui recevra la liste des id des annonces à afficher
     private final static String ARG_ID= "annonces";
     //On déclare un tableau qui va contenir les annonces à afficher
@@ -47,11 +54,14 @@ public class ListeAnnonceFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view= inflater.inflate(R.layout.fragment_liste_annonce, container, false);
-
+        /*
+        Récupération des données
+         */
         db = FirebaseDatabase.getInstance();
         auth=FirebaseAuth.getInstance();
         auth.getCurrentUser();
         myRef = db.getReference("Annonces");
+
 
         //Test pour voir si on reçoit bien les annonces à afficher
         if (idAnn != null && !idAnn.isEmpty()){
@@ -65,15 +75,23 @@ public class ListeAnnonceFragment extends Fragment {
         adapter = new AnnoncesAdapter(getContext(), arrayOfAnnonces);
 
         Button NewAnnonce = (Button) view.findViewById(R.id.BNewAnnonce);
+
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
+                String currentU =  auth.getCurrentUser().getUid();
                 for (DataSnapshot child : dataSnapshot.getChildren()){
                         //Log.i(TAG, "Value is: " + child.getValue(Annonce.class).getTitre());
                     Annonce value = child.getValue(Annonce.class);
-                    adapter.add(value);
+                    System.out.println("**************");
+                    System.out.println(value.getIdUser());
+                    System.out.println(auth.getCurrentUser().getUid());
+                    System.out.println(value.getAdresse());
+                    if( value.getIdUser().equals(auth.getCurrentUser().getUid())) {
+                        adapter.add(value);
+                    }
                     ListView laliste = (ListView) view.findViewById(R.id.ListeAnnonces);
                     laliste.setAdapter(adapter);
                 }

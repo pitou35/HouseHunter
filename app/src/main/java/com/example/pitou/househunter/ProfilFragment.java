@@ -26,7 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class ProfilFragment extends Fragment {
 
     private Button  btnChangePassword, btnRemoveUser,
-             changePassword, remove, signOut, BMesAnnones, BLesAnnones;
+             changePassword, remove, signOut, BLesAnnones;
 
     private EditText password, newPassword;
     private ProgressBar progressBar;
@@ -64,7 +64,6 @@ public class ProfilFragment extends Fragment {
 
         remove = (Button) view.findViewById(R.id.remove);
         signOut = (Button) view.findViewById(R.id.sign_out);
-        BMesAnnones = (Button) view.findViewById(R.id.BMesAnnones);
         BLesAnnones = (Button) view.findViewById(R.id.BLesAnnones);
 
         password = (EditText) view.findViewById(R.id.password);
@@ -92,14 +91,7 @@ public class ProfilFragment extends Fragment {
             }
         });
 
-        BMesAnnones.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction ft=getFragmentManager().beginTransaction();
-                ft.replace(R.id.current_fragment, new ListeAnnoncePropFragment());
-                ft.commit();
-            }
-        });
+
         BLesAnnones.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
