@@ -13,56 +13,48 @@
         android:weightSum="1">
 
         <TextView
-            android:text="Detail de l'offre"
+            android:text="Detail de l'annonce"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity = "center"
-            android:textSize="45px"
-            android:id="@+id/textTitre" />
+            android:textSize="60px"
+            android:id="@+id/textTitreInterface" />
 
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/txtTitre" />
+            android:id="@+id/textTitre"
+            android:textSize="24sp" />
 
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/txtPrix" />
+            android:id="@+id/textPrix"
+            android:textSize="24sp" />
 
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:id="@+id/txtDescription"
-            android:layout_weight="0.20" />
+            android:id="@+id/textDescription"
+            android:textSize="24sp" />
 
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:id="@+id/txtAdresse"
-            android:layout_weight="0.09" />
+            android:id="@+id/textAdresse"
+            android:textSize="24sp" />
 
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/txtContact" />
+            android:id="@+id/textContact"
+            android:textSize="24sp" />
 
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/txtDisponibilite" />
+            android:id="@+id/textDisponibilite"
+            android:textSize="24sp" />
 
     </LinearLayout>
 </FrameLayout>

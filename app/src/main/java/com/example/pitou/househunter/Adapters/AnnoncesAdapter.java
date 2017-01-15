@@ -1,24 +1,32 @@
 package com.example.pitou.househunter.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.pitou.househunter.ListeAnnonceFragment;
 import com.example.pitou.househunter.R;
 import com.example.pitou.househunter.model.Annonce;
 
 import java.util.ArrayList;
+
+import static com.google.android.gms.internal.zzs.TAG;
 
 /**
  * Created by kaoutar on 21/11/2016.
  */
 
 public class AnnoncesAdapter  extends ArrayAdapter<Annonce> {
-    public AnnoncesAdapter(Context context, ArrayList<Annonce> annonces) {
+
+    private ListeAnnonceFragment fragmentListeAnnonces;
+    public AnnoncesAdapter(Context context, ArrayList<Annonce> annonces, ListeAnnonceFragment fragment) {
         super(context, 0, annonces);
+        fragmentListeAnnonces = fragment;
     }
 
     @Override
@@ -46,6 +54,38 @@ public class AnnoncesAdapter  extends ArrayAdapter<Annonce> {
         datePublication.setText(annonce.getDatePublication());
         Dispnibilite.setText(annonce.getDisponibiliteLogement());
 
+
+        /**
+         * necessaire pour afficher les details et supprimer l'annonce
+         */
+        final TextView idAnnonce = (TextView) convertView.findViewById(R.id.idAnnonce);
+
+        Button details = (Button) convertView.findViewById(R.id.buttonDetails);
+        Button supprimer = (Button) convertView.findViewById(R.id.buttonSupprimer);
+        idAnnonce.setText(annonce.getIdAnnonce());
+
+        /**
+         * Bouton pour afficher les details de l'annonce en question
+         */
+        details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "id annonce to details"+idAnnonce.getText());
+                fragmentListeAnnonces.callDetailAnnonceFragment(idAnnonce.getText().toString());
+
+            }
+        });
+
+        /**
+         * Bouton pour supprimer un annonce
+         */
+        supprimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "id annonce to remove"+idAnnonce.getText());
+                fragmentListeAnnonces.createAndShowAlertDialog(idAnnonce.getText().toString());
+            }
+        });
 
         // Return the completed view to render on screen
         return convertView;
