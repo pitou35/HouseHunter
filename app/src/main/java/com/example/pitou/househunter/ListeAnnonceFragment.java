@@ -48,12 +48,6 @@ public class ListeAnnonceFragment extends Fragment {
      */
     private AnnoncesAdapter adapter;
 
-    //On déclare le nom du paramêtres reçu qui recevra la liste des id des annonces à afficher
-    private final static String ARG_ID= "annonces";
-    //On déclare un tableau qui va contenir les annonces à afficher
-    private ArrayList<String> idAnn = new ArrayList<>();
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,13 +62,6 @@ public class ListeAnnonceFragment extends Fragment {
         myRef = db.getReference("Annonces");
         myRefPos = db.getReference("AnnoncesPos");
 
-
-        //Test pour voir si on reçoit bien les annonces à afficher
-        if (idAnn != null && !idAnn.isEmpty()){
-            for(String id: idAnn){
-                System.out.println("Annonce à afficher: "+ id);
-            }
-        }
         ArrayList<Annonce> arrayOfAnnonces = new ArrayList<Annonce>();
         // Create the adapter to convert the array to views
 
@@ -118,24 +105,6 @@ public class ListeAnnonceFragment extends Fragment {
 
         return view;
 
-    }
-
-    /**Méthode appelle lors de la créatino du fragement**/
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            idAnn = getArguments().getStringArrayList(ARG_ID);//On va stocker le paramêtre reçu dans une variable
-        }
-    }
-
-    /**Méthode pour appeller ce fragement en lui fournissant une liste d'annonce (de paramêtre)**/
-    public static  ListeAnnonceFragment newInstance(ArrayList<String> listeIdAnnonce) {
-        ListeAnnonceFragment fragment = new  ListeAnnonceFragment(); //On crée notre fragement
-        Bundle args = new Bundle(); //On creer un bundle de paramêtres
-        args.putStringArrayList(ARG_ID, listeIdAnnonce); //On rajoute dans nos paramêtres
-        fragment.setArguments(args); //On rattache le bundle de paramêtres aux fragement
-        return fragment;
     }
 
     /**

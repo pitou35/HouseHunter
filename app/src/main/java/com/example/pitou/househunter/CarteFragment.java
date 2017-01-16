@@ -51,64 +51,22 @@ import java.util.Map;
  */
 public class CarteFragment extends Fragment {
 
-    /**
-     * Comment afficher les annonces
-     * 1)Création d'annonce: quand on fournit une adresse => on reprends L'objet Adresse et on retrouve les coordonnées qu'on sauvegarde
-     * dans Firebase (avec geofire)
-     * 2)Ici on utilise geofire qui va autour du user marker récuperer les annonces dans un rayon de 10 km
-     * 3)Pour chaque annonce récuperer on conserve son id et on affiche un marker avec les infos
-     * 4)Quand on clique sur ce marker on appelle le fragement pour ouvrir le détail
-     */
-    /**
-     * DONE: ajout marker (carte) quand geoquerie repére un element dans le rayon (mdf sur firebase)
-     * DONE: suppr marker (carte) quand geoquerie repére un element qui disparait dans le rayon (mdf sur firebase)
-     * DONE: mdf marker (carte) quand geoquerie repére un element qui bouge dans le rayon (mdf sur firebase)
-     * CANCEL: barre pour regler le rayon
-     * DONE: liens entre les coordonnées avec les vrais id
-     * DONE: completer formulaire ajout/mdf pour à partir de l'adresse determiner puis stocker les coordonnées avec geoqueries
-     * TODO: mdf listener marker pour changer de fragement quand on clique sur un marker
-     */
     MapView mMapView;
     private GoogleMap googleMap;
-    //Indique si on a fait une recherche (pour le cas ou on a fait une recherche
+    //Indique si on a fait une recherche d'adresse (pour le cas ou on a fait une recherche)
     private Boolean search = false;
     //Marker de l'utilisateur
     private Marker userMark;
-    //Marker ds annnonces
+    //Marker des annnonces
     private HashMap<String,Marker> annoncesMarkers;
     //Path des coordonnées des annonces
     private String geoPath = "AnnoncesPos/";
     //GeoFire qu'on va utiliser pour les Annonces
-    GeoFire geoFire;
-    //Niveau zoom carte
+    private GeoFire geoFire;
+    //Niveau zoom carte par défault
     private static int ZOOM_MAP=12;
-
+    //
     private FirebaseAuth auth;
-
-
-    //On définit le listener de la région
-    //private OnFragmentMapInteractionListener mListener;
-
-    /*public CarteFragment(){
-
-    }*/
-
-    /*
-     * Méthode pour créer ce fragment (pour rajouter des paramêtres si besoin)
-     */
-    /*public static  CarteFragment newInstance() {
-        CarteFragment fragment = new  CarteFragment();
-        Bundle args = new Bundle(); //on récupére les arguments (ici on n'en a pas)
-        fragment.setArguments(args); //on valide la maj
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
-    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -117,6 +75,7 @@ public class CarteFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_map, container, false);
         auth=FirebaseAuth.getInstance();
         /**On verifie si les permissions sont valides**/
+        //Si c'est pas le cas on demande les permissions
         if (ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this.getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
@@ -124,21 +83,24 @@ public class CarteFragment extends Fragment {
             ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                     MainActivity.ACCESS_FINE_LOCATION);
             restartActivity();
+        //Sinon on passe à la suite
         } else {
             /**On fait la localisation**/
-            // Acquire a reference to the system Location Manager
+            // On récupére une réference du location Manager
             final LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
-            // Define a listener that responds to location updates
+            // On définit un listener pour gere les changements de coordonnées
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, new LocationListener() {
                 public void onLocationChanged(Location location) {
                     // Called when a new location is found by the network location provider.
                     LatLng userPos = new LatLng(location.getLatitude(), location.getLongitude());
+                    //Si on n'a pas fait une recherche d'adresse pour placer le marker (!search)
                     if (googleMap != null && !search) {
-                        //On supprime l'ancien marker si il existe
+                        //On supprime l'ancien marker utilisateur si il existe
                         if (userMark != null) {
                             userMark.remove();
                         }
+                        //On place un nouveau marker et on zoom dessus
                         userMark = googleMap.addMarker(new MarkerOptions().position(userPos).title("Vous êtes ici"));
                         // For zooming automatically to the location of the marker
                         CameraPosition cameraPosition = new CameraPosition.Builder().target(userPos).zoom(ZOOM_MAP).build();
@@ -151,18 +113,18 @@ public class CarteFragment extends Fragment {
                 }
 
                 public void onProviderEnabled(String provider) {
-                    search = false; //on indique qu'on ne se place plus en fonction d'une recherche mais de sa position
+                    search = false; //On indique qu'on ne se place plus en fonction d'une recherche mais avec la position actuelle de l'utilisateur
                 }
 
                 public void onProviderDisabled(String provider) {
                 }
             });
 
-            /**On genere et gere la carte google**/
+            /**On genere et gére la carte google**/
             //On récupére la map view
             mMapView = (MapView) rootView.findViewById(R.id.mapView);
             mMapView.onCreate(savedInstanceState);
-            //On initialise la hashmpa des markers d'annonces
+            //On initialise la hashmap des markers d'annonces
             annoncesMarkers = new HashMap<>();
             mMapView.onResume(); //On l'affiche
             try {
@@ -179,43 +141,44 @@ public class CarteFragment extends Fragment {
                     googleMap = mMap;
                     //On rajoute le zoom
                     googleMap.getUiSettings().setZoomControlsEnabled(true);
+
+                    //On définit un listener pour réagir au click sur un marker
                     googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener(){
                         /**Méthode pour réagir au interaction sur les markers**/
                         @Override
                         public boolean onMarkerClick(final Marker marker) {
-                            //Si c'est le marker de l'utilisateur: on fait rien de particulier
-                            if(marker.equals(userMark)) {
-                                return false; //true = on conserve l'interaction de base
-                                //Sinon c'est une annonce:
-                               /*Comme plusieurs annonces peuveut avoir les memes adresses/coordonnees alors on va appeller un
-                               fragment pour afficher une liste de ces annonces: on va donc récuperer tout les markers
-                               qui ont les mêmes coordonnées et on va récuperer leur titres(=id des annonces) qu'on envoie à cette
-                               liste.
-                                */
-                            }else{
-                                ArrayList<String> idAnn = new ArrayList<>();
-                                for (Map.Entry<String, Marker> entry : annoncesMarkers.entrySet()){
-                                    Marker m = entry.getValue();
-                                    if (m.getPosition().equals(marker.getPosition())){
-                                        idAnn.add(m.getTitle());
-                                    }
+                        //Si c'est le marker de l'utilisateur: on fait rien de particulier
+                        if(marker.equals(userMark)) {
+                            return false; //false = on conserve l'interaction de base
+                            // Sinon c'est une annonce:
+                           /*Comme plusieurs annonces peuvent avoir les mêmes adresses/coordonnees alors on va appeller un
+                           fragment pour afficher une liste de ces annonces: on va donc récuperer tout les markers
+                           qui ont les mêmes coordonnées que celui qu'on vient de cliquer et on va récuperer leurs titres(=id des annonces)
+                           qu'on envoie à cette liste.
+                            */
+                        }else{
+                            ArrayList<String> idAnn = new ArrayList<>();
+                            for (Map.Entry<String, Marker> entry : annoncesMarkers.entrySet()){
+                                Marker m = entry.getValue();
+                                if (m.getPosition().equals(marker.getPosition())){
+                                    idAnn.add(m.getTitle());
                                 }
-                                System.out.println(idAnn);
-                                /**Initialisation du fragment à charger**/
-                                ListeAnnonceFragmentUtilisateur lstAnnonce =  ListeAnnonceFragmentUtilisateur.newInstance(idAnn); //on utilise l'instance et on fournit la valeur attendus dans l'instance
-                                /**Ajout d'un fragement**/
-                                //Début transaction avec une classe précise
-                                FragmentTransaction ft=getFragmentManager().beginTransaction();
-                                ft.replace(R.id.current_fragment, lstAnnonce);
-                                ft.commit();
-                                return true; //false pour garder l'interaction de base (titre du marqueur)
                             }
+                            /**Initialisation du fragment à charger**/
+                            ListeAnnonceFragmentUtilisateur lstAnnonce =  ListeAnnonceFragmentUtilisateur.newInstance(idAnn); //on utilise l'instance et on fournit la valeur attendu dans l'instance
+                            /**Ajout d'un fragement**/
+                            //Début transaction avec une classe précise
+                            FragmentTransaction ft=getFragmentManager().beginTransaction();
+                            ft.replace(R.id.current_fragment, lstAnnonce);
+                            ft.commit();
+                            return true; //true = on supprime l'interaction de base
                         }
-                    }); //on indique que les m&eacute;thodes pour le click sur les markers est d&eacute;finit dans notre classe
+                        }
+                    });
                 }
             });
 
-            /**Gestion de geofire: pour afficher les annonces autours de notre positiion**/
+            /**Gestion de geofire: pour afficher les annonces autour de notre positiion**/
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference(geoPath);
             geoFire = new GeoFire(ref);
 
@@ -239,7 +202,7 @@ public class CarteFragment extends Fragment {
                 }
             });
 
-            /*Listener bouton réactiver loc*/
+            /*Listener bouton réactiver le positionnement du marker user en fonction de la localisation*/
             Button buttonLoc = (Button) rootView.findViewById(R.id.buttonLoc);
             buttonLoc.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -286,31 +249,6 @@ public class CarteFragment extends Fragment {
         return rootView;
     }
 
-    /**Permet de rattacher les listeners utilisé par le fragment et implémenté par l'activité**/
-    /*@Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentMapInteractionListener) {
-            mListener = (OnFragmentMapInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }*/
-
-    /*@Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }*/
-
-    /**
-     * Interface qui liste les traitements appellées par les listeners qui seront à implémenter dans l'activité
-     */
-    /*public interface OnFragmentMapInteractionListener {
-        void onClickBtnConnection(); //l'activité devra implémenter cette méthode avec:
-    }*/
-
     /**Méthode pour redémarrer l'activité**/
     private void restartActivity() {
         Intent intent = getActivity().getIntent();
@@ -318,11 +256,11 @@ public class CarteFragment extends Fragment {
         startActivity(intent);
     }
 
-    /**Méthode pour activer un geoquerie: c'est a dire utiliser geoFire pour reperer autour du markeruser les annonces**/
+    /**Méthode pour activer un geoquerie: c'est a dire utiliser geoFire pour repérer autour du markeruser les annonces**/
     private void launchQuerie(double lat,double longit) {
-    GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(lat, longit), 10.0);
+    GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(lat, longit), 10.0); //Rayon de 10.0 km
     geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
-          //Cas element entrée dans le radius (ou trouvé)
+          //Cas un element est entrée dans le rayon (ou trouvé)
           @Override
           public void onKeyEntered(String key, GeoLocation location) {
               //Si jamais il reste une trace pour cette annonce on la supprime
@@ -330,17 +268,16 @@ public class CarteFragment extends Fragment {
                   annoncesMarkers.get(key).remove(); //on supprime le marker
                   annoncesMarkers.remove(key);
               }
-              //Maj carte (ajout marqueur)
+              //Maj carte (ajout du marqueur)
               LatLng loc = new LatLng(location.latitude, location.longitude);
               annoncesMarkers.put(key, googleMap.addMarker(new MarkerOptions()
                       .position(loc)
                       .title(key)
                       .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                      //.icon(BitmapDescriptorFactory.fromResource(R.drawable.taxi))
                       .snippet(key)
-              )); //Ajout du nouveau marker
+              ));
           }
-          //Cas element sort
+          //Cas un element sort
           @Override
           public void onKeyExited(String key) {
               //Recuperer dans la liste des markers, le marker qui a la clé et le supprimer
@@ -350,7 +287,7 @@ public class CarteFragment extends Fragment {
               }
           }
 
-          //Cas element bouge
+          //Cas un element bouge
           @Override
           public void onKeyMoved(String key, GeoLocation location) {
               //Si jamais il reste une trace pour cette annonce on la supprime
@@ -358,15 +295,14 @@ public class CarteFragment extends Fragment {
                   annoncesMarkers.get(key).remove(); //on supprime le marker
                   annoncesMarkers.remove(key);
               }
-              //Maj carte (ajout marqueur)
+              //Maj carte (ajout du marqueur)
               LatLng loc = new LatLng(location.latitude, location.longitude);
               annoncesMarkers.put(key, googleMap.addMarker(new MarkerOptions()
                       .position(loc)
                       .title(key)
                       .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                      //.icon(BitmapDescriptorFactory.fromResource(R.drawable.taxi))
                       .snippet(key)
-              )); //Ajout du nouveau marker
+              ));
           }
 
           @Override
@@ -380,7 +316,7 @@ public class CarteFragment extends Fragment {
       });
     }
 
-    /**Méthode pour positionner le marker d'adresse à l'adresse entrée par le client**/
+    /**Méthode pour positionner le marker du user à l'adresse (dont on a les coordonnées) entrée par le client**/
     private void gotoLocation (double lat, double lgt, String add1, String add2){
         LatLng ll = new LatLng(lat, lgt);
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, ZOOM_MAP);
