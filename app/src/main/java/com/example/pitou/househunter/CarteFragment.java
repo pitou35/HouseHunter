@@ -201,8 +201,8 @@ public class CarteFragment extends Fragment {
                                     }
                                 }
                                 System.out.println(idAnn);
-                                /**Initialisation du fragment webview**/
-                                ListeAnnonceFragment lstAnnonce =  ListeAnnonceFragment.newInstance(idAnn); //on utilise l'instance et on fournit la valeur attendus dans l'instance
+                                /**Initialisation du fragment à charger**/
+                                ListeAnnonceFragmentUtilisateur lstAnnonce =  ListeAnnonceFragmentUtilisateur.newInstance(idAnn); //on utilise l'instance et on fournit la valeur attendus dans l'instance
                                 /**Ajout d'un fragement**/
                                 //Début transaction avec une classe précise
                                 FragmentTransaction ft=getFragmentManager().beginTransaction();
