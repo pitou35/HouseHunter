@@ -35,7 +35,7 @@ public class AnnoncesAdapterUtilisateur extends ArrayAdapter<Annonce> {
         Annonce annonce = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.annonceutilisateur, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.annonce_utilisateur, parent, false);
         }
         // Lookup view for data population
 

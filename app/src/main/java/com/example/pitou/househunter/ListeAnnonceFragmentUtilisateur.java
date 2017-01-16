@@ -10,11 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 
 
-import com.example.pitou.househunter.Adapters.AnnoncesAdapter;
 import com.example.pitou.househunter.Adapters.AnnoncesAdapterUtilisateur;
 import com.example.pitou.househunter.model.Annonce;
 import com.google.firebase.auth.FirebaseAuth;
@@ -56,28 +54,44 @@ public class ListeAnnonceFragmentUtilisateur extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View view= inflater.inflate(R.layout.fragment_liste_annonceutilisateur, container, false);
+        final View view= inflater.inflate(R.layout.fragment_liste_annonce_utilisateur, container, false);
         /*
         Récupération des données
          */
         db = FirebaseDatabase.getInstance();
-        auth=FirebaseAuth.getInstance();
-        auth.getCurrentUser();
         myRef = db.getReference("Annonces");
 
 
-        //Test pour voir si on reçoit bien les annonces à afficher
+        //Si on a bien reçu les id des annonces à afficher: on va les chercher et completer l'adapteur
         if (idAnn != null && !idAnn.isEmpty()){
-            for(String id: idAnn){
+            ArrayList<Annonce> arrayOfAnnonces = new ArrayList<Annonce>();
+            for(final String id: idAnn){
                 System.out.println("Annonce à afficher: "+ id);
+                myRef.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //Log.i(TAG, "Value is: " + child.getValue(Annonce.class).getTitre());
+                        Annonce value = dataSnapshot.getValue(Annonce.class);
+                        adapter.add(value);
+                        value.setIdAnnonce(myRef.child(id).getKey());
+                        ListView laliste = (ListView) view.findViewById(R.id.ListeAnnonces);
+                        laliste.setAdapter(adapter);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        // Failed to read value
+                        Log.w(TAG, "Failed to read value.", error.toException());
+                    }
+                });
+                // Create the adapter to convert the array to views
+                adapter = new AnnoncesAdapterUtilisateur(getContext(), arrayOfAnnonces, ListeAnnonceFragmentUtilisateur.this);
             }
         }
-        ArrayList<Annonce> arrayOfAnnonces = new ArrayList<Annonce>();
-        // Create the adapter to convert the array to views
 
-        adapter = new AnnoncesAdapterUtilisateur(getContext(), arrayOfAnnonces, ListeAnnonceFragmentUtilisateur.this);
 
-        myRef.addValueEventListener(new ValueEventListener() {
+
+        /*myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
@@ -100,7 +114,7 @@ public class ListeAnnonceFragmentUtilisateur extends Fragment {
                 // Failed to read value
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
-        });
+        });*/
 
         return view;
 

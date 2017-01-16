@@ -42,6 +42,7 @@ public class ListeAnnonceFragment extends Fragment {
     private FirebaseDatabase db;
     private FirebaseAuth auth;
     private DatabaseReference myRef;
+    private DatabaseReference myRefPos;
     /*
     La variable qui représente l'adapter de la liste des annonces avec le modèle de l'annonce.
      */
@@ -65,6 +66,7 @@ public class ListeAnnonceFragment extends Fragment {
         auth=FirebaseAuth.getInstance();
         auth.getCurrentUser();
         myRef = db.getReference("Annonces");
+        myRefPos = db.getReference("AnnoncesPos");
 
 
         //Test pour voir si on reçoit bien les annonces à afficher
@@ -163,6 +165,7 @@ public class ListeAnnonceFragment extends Fragment {
             public void onClick(DialogInterface dialog, int id) {
                 //supprimer l'annonce de la BD
                 myRef.child(idAnnonceEffacer).removeValue();
+                myRefPos.child(idAnnonceEffacer).removeValue();
                 //mettre a jour le listview des annonces (mettre a jour le fragment)
                 FragmentTransaction ft= getFragmentManager().beginTransaction();
                 ft.replace(R.id.current_fragment, new ListeAnnonceFragment());
