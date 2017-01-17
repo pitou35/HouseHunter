@@ -81,11 +81,11 @@ public class DetailAnnonceFragment extends Fragment {
                     //afficher details de l'annonce
                     if(child.getKey().equals(idAnnonce)){
                         titreAnnonce.setText(value.getTitre());
-                        descriptionAnnonce.setText("Description: "+value.getDescription());
-                        prixLogement.setText("Prix: "+value.getPrixLogment());
-                        telContact.setText("Contact: "+value.getTelContact());
-                        disponibilite.setText("Disponibilité: "+value.getDisponibiliteLogement());
-                        adresse.setText("Adresse: "+value.getAdresse());
+                        descriptionAnnonce.setText(value.getDescription());
+                        prixLogement.setText(value.getPrixLogment());
+                        telContact.setText(value.getTelContact());
+                        disponibilite.setText(value.getDisponibiliteLogement());
+                        adresse.setText(value.getAdresse());
                     }
 
 

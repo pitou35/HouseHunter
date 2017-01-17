@@ -28,7 +28,8 @@
         android:layout_toRightOf="@+id/avatar"
         android:layout_alignTop="@+id/avatar"
         android:textStyle="bold"
-        android:id="@+id/TitreAnnonce" />
+        android:id="@+id/TitreAnnonce"
+        android:textSize="18sp" />
 <!--
     <TextView
         android:layout_width="wrap_content"
@@ -100,7 +101,8 @@
         android:layout_marginTop="5dp"
         android:layout_alignLeft="@+id/PrixLogement"
         android:layout_below="@+id/PrixLogement"
-        android:id="@+id/datePub" />
+        android:id="@+id/datePub"
+        android:layout_marginLeft="15dp"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -124,7 +126,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/buttonSupprimer"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
+            android:background="@color/btn_logut_bg"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
             android:textColor="@color/cast_expanded_controller_text_color" />
