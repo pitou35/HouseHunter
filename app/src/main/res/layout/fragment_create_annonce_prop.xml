@@ -17,16 +17,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/Ttitre"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"/>
 
             <EditText
                 android:id="@+id/ETitreAnnonce"
-                android:layout_width="fill_parent"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:layout_below="@+id/Ttitre"
                 android:layout_toEndOf="@+id/Ttitre"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp" />
 
             <TextView
                 android:text="Description de l'annonce"
@@ -35,17 +38,19 @@
                 android:id="@+id/Tdescription"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
                 android:layout_below="@+id/ETitreAnnonce"
                 android:textStyle="bold"/>
 
             <EditText
-                android:layout_width="fill_parent"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:id="@+id/EDescriAnnonce"
                 android:layout_below="@+id/Tdescription"
                 android:layout_alignStart="@+id/Tdescription"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
                  />
 
             <TextView
@@ -54,16 +59,18 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/Tadresse"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
                 android:layout_below="@+id/EDescriAnnonce"
                 android:layout_alignParentStart="true"
                 android:textStyle="bold"/>
 
             <EditText
-                android:layout_width="fill_parent"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:id="@+id/EAdressAnnonce"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
                 android:layout_below="@+id/Tadresse"
                 />
 
@@ -75,14 +82,16 @@
                 android:layout_below="@+id/EAdressAnnonce"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
                 android:id="@+id/Ttel"
                 android:textStyle="bold"/>
 
             <EditText
-                android:layout_width="fill_parent"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
                 android:id="@+id/ETelContact"
                 android:layout_below="@+id/Ttel"
                 />
@@ -94,16 +103,18 @@
                 android:layout_below="@+id/ETelContact"
                 android:layout_alignEnd="@+id/Ttel"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
                 android:id="@+id/textView2"
                 android:textStyle="bold"/>
 
             <EditText
-                android:layout_width="fill_parent"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:layout_below="@+id/textView2"
                 android:layout_alignStart="@+id/ETelContact"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
                 android:id="@+id/EprixLog" />
             <TextView
                 android:text="Disponibilité logement"
@@ -113,16 +124,18 @@
                 android:textStyle="bold"
                 android:layout_below="@+id/EdatePublication"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
                 android:layout_alignParentStart="true" />
 
             <EditText
-                android:layout_width="fill_parent"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:inputType="date"
                 android:id="@+id/EdisponibiliteLoge"
                 android:layout_below="@+id/textView4"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"/>
 
             <TextView
                 android:text="Date de publication"
@@ -131,15 +144,17 @@
                 android:layout_below="@+id/EprixLog"
                 android:layout_alignStart="@+id/textView2"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
                 android:id="@+id/textView3"
                 android:textStyle="bold"/>
 
             <EditText
-                android:layout_width="fill_parent"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:inputType="date"
                 android:layout_below="@+id/textView3"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
                 android:id="@+id/EdatePublication" />
 
 
@@ -154,7 +169,9 @@
                 android:layout_alignParentEnd="true"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"
-                 />
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@color/colorPrimaryDark" />
 
 
         </LinearLayout>
