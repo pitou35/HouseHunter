@@ -3,12 +3,13 @@
 Projet houseHunter
 
 Collaborateurs M2 MIAGE:
-Sandra Villafuerte
 
-Kaoutar Bennouna
+- Sandra Villafuerte
 
-Mikael Philip
+- Kaoutar Bennouna
 
-Pierre-A. Totaro
+- Mikael Philip
+
+- Pierre-A. Totaro
 
 fournit code source + APK + cahier des charges
