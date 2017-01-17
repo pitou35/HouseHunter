@@ -48,9 +48,10 @@ public class ConnectionFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
             System.out.println("ALREADY CONNECTED");
-            FragmentTransaction ft=getFragmentManager().beginTransaction();
+            /*FragmentTransaction ft=getFragmentManager().beginTransaction();
             ft.replace(R.id.current_fragment, new CarteFragment());
-            ft.commit();
+            ft.commit();*/
+            ((MainActivity)getActivity()).showFragment(new CarteFragment());
         }
         View view= inflater.inflate(R.layout.fragment_connection, parent, false);
 
@@ -64,19 +65,20 @@ public class ConnectionFragment extends Fragment {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft=getFragmentManager().beginTransaction();
+                /*FragmentTransaction ft=getFragmentManager().beginTransaction();
                 ft.replace(R.id.current_fragment, new CreateAccFragment());
-                ft.commit();
-
+                ft.commit();*/
+                ((MainActivity)getActivity()).showFragment(new CreateAccFragment());
             }
         });
 
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft=getFragmentManager().beginTransaction();
+                /*FragmentTransaction ft=getFragmentManager().beginTransaction();
                 ft.replace(R.id.current_fragment, new ResetPasswordFragment());
-                ft.commit();
+                ft.commit();*/
+                ((MainActivity)getActivity()).showFragment(new ResetPasswordFragment());
             }
         });
 
@@ -110,9 +112,10 @@ public class ConnectionFragment extends Fragment {
                                         Toast.makeText(getActivity(), getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                                     }
                                 } else {
-                                    FragmentTransaction ft=getFragmentManager().beginTransaction();
+                                    /*FragmentTransaction ft=getFragmentManager().beginTransaction();
                                     ft.replace(R.id.current_fragment, new CarteFragment());
-                                    ft.commit();
+                                    ft.commit();*/
+                                    ((MainActivity)getActivity()).showFragment(new CarteFragment());
                                 }
                             }
                         });

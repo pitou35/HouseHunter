@@ -133,9 +133,10 @@ public class CreateAnnoncePropFragment extends Fragment {
                                                }
                                            });
 
-                                           FragmentTransaction ft=getFragmentManager().beginTransaction();
+                                           /*FragmentTransaction ft=getFragmentManager().beginTransaction();
                                            ft.replace(R.id.current_fragment, new ListeAnnonceFragment());
-                                           ft.commit();
+                                           ft.commit();*/
+                                           ((MainActivity)getActivity()).showFragment(new ListeAnnonceFragment());
                                        }
 
 

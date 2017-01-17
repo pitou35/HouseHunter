@@ -96,10 +96,10 @@ public class ListeAnnonceFragment extends Fragment {
         NewAnnonce.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft=getFragmentManager().beginTransaction();
+                /*FragmentTransaction ft=getFragmentManager().beginTransaction();
                 ft.replace(R.id.current_fragment, new CreateAnnoncePropFragment());
-                ft.commit();
-
+                ft.commit();*/
+                ((MainActivity)getActivity()).showFragment(new CreateAnnoncePropFragment());
             }
         });
 
@@ -113,10 +113,11 @@ public class ListeAnnonceFragment extends Fragment {
      */
     public void callDetailAnnonceFragment(String idAnnonce){
         DetailAnnonceFragment details = new DetailAnnonceFragment();
-        FragmentTransaction ft= getFragmentManager().beginTransaction();
+        //FragmentTransaction ft= getFragmentManager().beginTransaction();
         details.setIdAnnonce(idAnnonce);
-        ft.replace(R.id.current_fragment, details);
-        ft.commit();
+        /*ft.replace(R.id.current_fragment, details);
+        ft.commit();*/
+        ((MainActivity)getActivity()).showFragment(new DetailAnnonceFragment());
     }
 
     /**
@@ -136,9 +137,10 @@ public class ListeAnnonceFragment extends Fragment {
                 myRef.child(idAnnonceEffacer).removeValue();
                 myRefPos.child(idAnnonceEffacer).removeValue();
                 //mettre a jour le listview des annonces (mettre a jour le fragment)
-                FragmentTransaction ft= getFragmentManager().beginTransaction();
+                /*FragmentTransaction ft= getFragmentManager().beginTransaction();
                 ft.replace(R.id.current_fragment, new ListeAnnonceFragment());
-                ft.commit();
+                ft.commit();*/
+                ((MainActivity)getActivity()).showFragment(new ListeAnnonceFragment());
             }
         });
         builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {

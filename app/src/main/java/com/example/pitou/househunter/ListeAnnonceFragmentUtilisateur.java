@@ -144,10 +144,11 @@ public class ListeAnnonceFragmentUtilisateur extends Fragment {
      */
     public void callDetailAnnonceFragment(String idAnnonce){
         DetailAnnonceFragment details = new DetailAnnonceFragment();
-        FragmentTransaction ft= getFragmentManager().beginTransaction();
         details.setIdAnnonce(idAnnonce);
+        /*FragmentTransaction ft= getFragmentManager().beginTransaction();
         ft.replace(R.id.current_fragment, details);
-        ft.commit();
+        ft.commit();*/
+        ((MainActivity)getActivity()).showFragment(details);
     }
 
     /**
@@ -166,9 +167,10 @@ public class ListeAnnonceFragmentUtilisateur extends Fragment {
                 //supprimer l'annonce de la BD
                 myRef.child(idAnnonceEffacer).removeValue();
                 //mettre a jour le listview des annonces (mettre a jour le fragment)
-                FragmentTransaction ft= getFragmentManager().beginTransaction();
+                /*FragmentTransaction ft= getFragmentManager().beginTransaction();
                 ft.replace(R.id.current_fragment, new ListeAnnonceFragmentUtilisateur());
-                ft.commit();
+                ft.commit();*/
+                ((MainActivity)getActivity()).showFragment(new ListeAnnonceFragmentUtilisateur());
             }
         });
         builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {

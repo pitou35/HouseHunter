@@ -190,13 +190,16 @@ public class CarteFragment extends Fragment {
                 public void onClick(View v) {
                     //mListener.onClickBtnConnection();
                     if (auth!=null){
-                        FragmentTransaction ft=getFragmentManager().beginTransaction();
+                        /*FragmentTransaction ft=getFragmentManager().beginTransaction();
                         ft.replace(R.id.current_fragment, new ProfilFragment());
-                        ft.commit();
+                        ft.commit();*/
+                        ((MainActivity)getActivity()).showFragment(new ProfilFragment());
+
                     }else{
-                        FragmentTransaction ft=getFragmentManager().beginTransaction();
+                        /*FragmentTransaction ft=getFragmentManager().beginTransaction();
                         ft.replace(R.id.current_fragment, new ConnectionFragment());
-                        ft.commit();
+                        ft.commit();*/
+                        ((MainActivity)getActivity()).showFragment(new ConnectionFragment());
                     }
 
                 }

@@ -52,19 +52,20 @@ public class CreateAccFragment extends Fragment {
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft=getFragmentManager().beginTransaction();
+                /*FragmentTransaction ft=getFragmentManager().beginTransaction();
                 ft.replace(R.id.current_fragment, new CreateAccFragment());
-                ft.commit();
+                ft.commit();*/
+                ((MainActivity)getActivity()).showFragment(new CreateAccFragment());
             }
         });
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft=getFragmentManager().beginTransaction();
+                /*FragmentTransaction ft=getFragmentManager().beginTransaction();
                 ft.replace(R.id.current_fragment, new ConnectionFragment());
-                ft.commit();
-
+                ft.commit();*/
+                ((MainActivity)getActivity()).showFragment(new ConnectionFragment());
             }
         });
 
@@ -101,9 +102,10 @@ public class CreateAccFragment extends Fragment {
                                     Toast.makeText(getActivity(), "Authentification échouée." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 } else {
-                                    FragmentTransaction ft=getFragmentManager().beginTransaction();
+                                    /*FragmentTransaction ft=getFragmentManager().beginTransaction();
                                     ft.replace(R.id.current_fragment, new CarteFragment());
-                                    ft.commit();
+                                    ft.commit();*/
+                                    ((MainActivity)getActivity()).showFragment(new CarteFragment());
                                 }
                             }
                         });

@@ -49,9 +49,11 @@ public class ProfilFragment extends Fragment {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user == null) {
-                    FragmentTransaction ft=getFragmentManager().beginTransaction();
+                    /*FragmentTransaction ft=getFragmentManager().beginTransaction();
                     ft.replace(R.id.current_fragment, new ConnectionFragment());
-                    ft.commit();
+                    ft.commit();*/
+                    ((MainActivity)getActivity()).showFragment(new ConnectionFragment());
+
                 }
             }
         };
@@ -95,18 +97,11 @@ public class ProfilFragment extends Fragment {
         BLesAnnones.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft=getFragmentManager().beginTransaction();
+                /*FragmentTransaction ft=getFragmentManager().beginTransaction();
                 ft.replace(R.id.current_fragment, new ListeAnnonceFragment());
-                ft.commit();
-            }
-        });
+                ft.commit();*/
+                ((MainActivity)getActivity()).showFragment(new ListeAnnonceFragment());
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction ft=getFragmentManager().beginTransaction();
-                ft.replace(R.id.current_fragment, new CarteFragment());
-                ft.commit();
             }
         });
 
@@ -152,10 +147,11 @@ public class ProfilFragment extends Fragment {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         Toast.makeText(getActivity(), "Votre profil est supprimé:( Créez un compte maintenant!", Toast.LENGTH_SHORT).show();
-                                        FragmentTransaction ft=getFragmentManager().beginTransaction();
+                                        /*FragmentTransaction ft=getFragmentManager().beginTransaction();
                                         ft.replace(R.id.current_fragment, new CreateAccFragment());
-                                        ft.commit();
+                                        ft.commit();*/
                                         progressBar.setVisibility(View.GONE);
+                                        ((MainActivity)getActivity()).showFragment(new CreateAccFragment());
                                     } else {
                                         Toast.makeText(getActivity(), "Impossible de supprimer le compte!", Toast.LENGTH_SHORT).show();
                                         progressBar.setVisibility(View.GONE);
