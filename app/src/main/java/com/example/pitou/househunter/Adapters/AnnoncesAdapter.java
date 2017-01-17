@@ -66,8 +66,8 @@ public class AnnoncesAdapter  extends ArrayAdapter<Annonce> {
         final TextView idAnnonce = (TextView) convertView.findViewById(R.id.idAnnonce);
 
         Button details = (Button) convertView.findViewById(R.id.buttonDetails);
-        Button supprimer = (Button) convertView.findViewById(R.id.buttonSupprimer);
         idAnnonce.setText(annonce.getIdAnnonce());
+        Button supprimer = (Button) convertView.findViewById(R.id.buttonSupprimer);
 
         /**
          * Bouton pour afficher les details de l'annonce en question

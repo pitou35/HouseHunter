@@ -75,9 +75,8 @@ public class DetailAnnonceFragment extends Fragment {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 for (DataSnapshot child : dataSnapshot.getChildren()){
-                    Log.i(TAG, "Value is: " + child.getValue(Annonce.class).getTitre());
+                    //Log.i(TAG, "Value is: " + child.getValue(Annonce.class).getTitre());
                     Annonce value = child.getValue(Annonce.class);
-
                     //afficher details de l'annonce
                     if(child.getKey().equals(idAnnonce)){
                         titreAnnonce.setText(value.getTitre());

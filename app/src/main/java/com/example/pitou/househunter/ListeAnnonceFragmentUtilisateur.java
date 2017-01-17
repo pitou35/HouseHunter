@@ -66,7 +66,6 @@ public class ListeAnnonceFragmentUtilisateur extends Fragment {
         if (idAnn != null && !idAnn.isEmpty()){
             ArrayList<Annonce> arrayOfAnnonces = new ArrayList<Annonce>();
             for(final String id: idAnn){
-                System.out.println("Annonce à afficher: "+ id);
                 myRef.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -149,37 +148,6 @@ public class ListeAnnonceFragmentUtilisateur extends Fragment {
         ft.replace(R.id.current_fragment, details);
         ft.commit();*/
         ((MainActivity)getActivity()).showFragment(details);
-    }
-
-    /**
-     * montre message de confirmation si l'utilisateur clique sur
-     *oui: l'application efface de la base de donnés l'annonce selectionné, on met a jour le fragment qui contient
-     * la liste d'annonces apres l'effacement d'un annonce
-     * sinon le message de confirmation est fermé
-     * @param idAnnonce: permet de savoir quel annonce il faut effacer
-     */
-    public void createAndShowAlertDialog(String idAnnonce) {
-        final String idAnnonceEffacer = idAnnonce;
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Voulez vous effacer l'annonce?");
-        builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                //supprimer l'annonce de la BD
-                myRef.child(idAnnonceEffacer).removeValue();
-                //mettre a jour le listview des annonces (mettre a jour le fragment)
-                /*FragmentTransaction ft= getFragmentManager().beginTransaction();
-                ft.replace(R.id.current_fragment, new ListeAnnonceFragmentUtilisateur());
-                ft.commit();*/
-                ((MainActivity)getActivity()).showFragment(new ListeAnnonceFragmentUtilisateur());
-            }
-        });
-        builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 
 }

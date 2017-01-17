@@ -112,12 +112,13 @@ public class ListeAnnonceFragment extends Fragment {
      * @param idAnnonce : cet paramettre sert pour afficher les informations de l'annonce demandé
      */
     public void callDetailAnnonceFragment(String idAnnonce){
+        System.out.println(idAnnonce);
         DetailAnnonceFragment details = new DetailAnnonceFragment();
         //FragmentTransaction ft= getFragmentManager().beginTransaction();
         details.setIdAnnonce(idAnnonce);
         /*ft.replace(R.id.current_fragment, details);
         ft.commit();*/
-        ((MainActivity)getActivity()).showFragment(new DetailAnnonceFragment());
+        ((MainActivity)getActivity()).showFragment(details);
     }
 
     /**
