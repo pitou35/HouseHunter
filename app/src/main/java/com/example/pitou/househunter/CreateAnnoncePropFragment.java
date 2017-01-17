@@ -81,24 +81,8 @@ public class CreateAnnoncePropFragment extends Fragment {
                                            //Generation d'un id aléatoire (car on doit connaitre l'id aléatoire pour des traitements plus tard)
                                            final SecureRandom random = new SecureRandom();
                                            final String idAnnonce=  new BigInteger(130, random).toString(32);
-                                           //On verifie si l'id existe déja
-                                           //Si l'id existe déja: on arrete l'opération et on demande de la refaire
-                                           myRef.child(idAnnonce).addListenerForSingleValueEvent(new ValueEventListener() {
-                                               @Override
-                                               public void onDataChange(DataSnapshot snapshot) {
-                                                   if (snapshot.exists()) {
-                                                       Toast.makeText(getContext(), "Erreur generation id automatique: recommencez svp", Toast.LENGTH_SHORT).show();
-                                                   }else{
-                                                       myRef.child(idAnnonce).setValue(annonce);
-                                                   }
-                                               }
 
-                                               @Override
-                                               public void onCancelled(DatabaseError databaseError) {
-
-                                               }
-                                           });
-
+                                           //On vérifie si les champs sont ok
                                            if (TextUtils.isEmpty(titreA)) {
                                                Toast.makeText(getContext(), "Enter a title!", Toast.LENGTH_SHORT).show();
                                                return;
@@ -126,9 +110,28 @@ public class CreateAnnoncePropFragment extends Fragment {
                                                    geoFire.setLocation(idAnnonce,new GeoLocation(lat,lgt)); //On récupére et enregistre ses coordonnées dans firebase
                                                }
                                                } catch (IOException e) {
-                                                   e.printStackTrace();
+                                                   Toast.makeText(getContext(), "Erreur lors de la recherche des coordonnées: modifiez ou completez l'adresse", Toast.LENGTH_SHORT).show();
+                                                   return;
                                                }
                                            }
+
+                                           //On verifie si l'id existe déja
+                                           //Si l'id existe déja: on arrete l'opération et on demande de la refaire
+                                           myRef.child(idAnnonce).addListenerForSingleValueEvent(new ValueEventListener() {
+                                               @Override
+                                               public void onDataChange(DataSnapshot snapshot) {
+                                                   if (snapshot.exists()) {
+                                                       Toast.makeText(getContext(), "Erreur generation id automatique: recommencez svp", Toast.LENGTH_SHORT).show();
+                                                   }else{
+                                                       myRef.child(idAnnonce).setValue(annonce);
+                                                   }
+                                               }
+
+                                               @Override
+                                               public void onCancelled(DatabaseError databaseError) {
+                                                   Toast.makeText(getContext(), "Erreur d'enregistrement de  l'annonce: recommencez svp", Toast.LENGTH_SHORT).show();
+                                               }
+                                           });
 
                                            FragmentTransaction ft=getFragmentManager().beginTransaction();
                                            ft.replace(R.id.current_fragment, new ListeAnnonceFragment());
