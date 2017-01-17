@@ -168,9 +168,10 @@ public class CarteFragment extends Fragment {
                             ListeAnnonceFragmentUtilisateur lstAnnonce =  ListeAnnonceFragmentUtilisateur.newInstance(idAnn); //on utilise l'instance et on fournit la valeur attendu dans l'instance
                             /**Ajout d'un fragement**/
                             //Début transaction avec une classe précise
-                            FragmentTransaction ft=getFragmentManager().beginTransaction();
+                            /*FragmentTransaction ft=getFragmentManager().beginTransaction();
                             ft.replace(R.id.current_fragment, lstAnnonce);
-                            ft.commit();
+                            ft.commit();*/
+                            ((MainActivity)getActivity()).showFragment(lstAnnonce);
                             return true; //true = on supprime l'interaction de base
                         }
                         }
