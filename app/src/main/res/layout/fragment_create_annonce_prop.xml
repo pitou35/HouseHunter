@@ -105,6 +105,24 @@
                 android:layout_alignStart="@+id/ETelContact"
                 android:layout_marginTop="5dp"
                 android:id="@+id/EprixLog" />
+            <TextView
+                android:text="Disponibilité logement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView4"
+                android:textStyle="bold"
+                android:layout_below="@+id/EdatePublication"
+                android:layout_marginTop="5dp"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:id="@+id/EdisponibiliteLoge"
+                android:layout_below="@+id/textView4"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="5dp" />
 
             <TextView
                 android:text="Date de publication"
@@ -124,24 +142,7 @@
                 android:layout_marginTop="5dp"
                 android:id="@+id/EdatePublication" />
 
-            <TextView
-                android:text="Disponibilité logement"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView4"
-                android:textStyle="bold"
-                android:layout_below="@+id/EdatePublication"
-                android:layout_marginTop="5dp"
-                android:layout_alignParentStart="true" />
 
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:inputType="date"
-                android:id="@+id/EdisponibiliteLoge"
-                android:layout_below="@+id/textView4"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="5dp" />
 
             <Button
                 android:text="Ajouter"
