@@ -27,6 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -46,10 +48,13 @@ public class CreateAnnoncePropFragment extends Fragment {
 
         db = FirebaseDatabase.getInstance();
         auth=FirebaseAuth.getInstance();
+        Calendar c = Calendar.getInstance();
             //auth.getCurrentUser().getUid();
         myRef = db.getReference("Annonces");
         geoFire = new GeoFire(db.getReference("AnnoncesPos")); //On implément GeoFire qui va nous permettre de stocker les coordonnées de la nouvelle annonce
 
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = df.format(c.getTime());
 
         final TextView titre = (TextView) view.findViewById(R.id.ETitreAnnonce);
         final TextView description = (TextView) view.findViewById(R.id.EDescriAnnonce);
@@ -59,6 +64,7 @@ public class CreateAnnoncePropFragment extends Fragment {
         final TextView datePub = (TextView) view.findViewById(R.id.EdatePublication);
         final TextView dateDispo = (TextView) view.findViewById(R.id.EdisponibiliteLoge);
         Button ajouter = (Button) view.findViewById(R.id.Ajouter);
+        datePub.setText(formattedDate);
 
         ajouter.setOnClickListener(new View.OnClickListener() {
                                        @Override
