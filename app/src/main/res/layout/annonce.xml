@@ -29,7 +29,7 @@
         android:layout_alignTop="@+id/avatar"
         android:textStyle="bold"
         android:id="@+id/TitreAnnonce" />
-
+<!--
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -89,6 +89,7 @@
         android:layout_alignLeft="@+id/datePub"
         android:layout_below="@+id/datePub"
         android:id="@+id/disponibilite" />
+        -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
