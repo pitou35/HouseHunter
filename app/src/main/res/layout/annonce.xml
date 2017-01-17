@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/avatar"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
         />
 
     <TextView
@@ -24,7 +24,7 @@
         android:text="Titre Annonce"
         android:textColor="@android:color/black"
         android:ems="10"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="15dp"
         android:layout_toRightOf="@+id/avatar"
         android:layout_alignTop="@+id/avatar"
         android:textStyle="bold"
@@ -37,6 +37,7 @@
         android:text="Description Annonce"
         android:textColor="@android:color/black"
         android:ems="10"
+        android:layout_marginTop="5dp"
         android:layout_alignLeft="@+id/TitreAnnonce"
         android:layout_below="@+id/TitreAnnonce"
         android:id="@+id/DescrAnnonce" />
@@ -48,6 +49,7 @@
         android:text="Adresse Annonce"
         android:textColor="@android:color/black"
         android:ems="10"
+        android:layout_marginTop="5dp"
         android:layout_alignLeft="@+id/DescrAnnonce"
         android:layout_below="@+id/DescrAnnonce"
         android:id="@+id/Adresse" />
@@ -59,6 +61,7 @@
         android:text="Téléphone"
         android:textColor="@android:color/black"
         android:ems="10"
+        android:layout_marginTop="5dp"
         android:layout_alignLeft="@+id/Adresse"
         android:layout_below="@+id/Adresse"
         android:id="@+id/Telephone" />
@@ -70,6 +73,7 @@
         android:text="Prix du Logment"
         android:textColor="@android:color/black"
         android:ems="10"
+        android:layout_marginTop="5dp"
         android:layout_alignLeft="@+id/Telephone"
         android:layout_below="@+id/Telephone"
         android:id="@+id/PrixLogement" />
@@ -80,6 +84,7 @@
         android:text="datePublication"
         android:textColor="@android:color/black"
         android:ems="10"
+        android:layout_marginTop="5dp"
         android:layout_alignLeft="@+id/PrixLogement"
         android:layout_below="@+id/PrixLogement"
         android:id="@+id/datePub" />
@@ -90,6 +95,7 @@
         android:text="disponibiliteLogement"
         android:textColor="@android:color/black"
         android:ems="10"
+        android:layout_marginTop="5dp"
         android:layout_alignLeft="@+id/datePub"
         android:layout_below="@+id/datePub"
         android:id="@+id/disponibilite" />
