@@ -1,147 +1,161 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<?xml version="1.0" encoding="utf-8"?>
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/ScrollView01"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scrollbars="vertical"
     tools:context="com.example.pitou.househunter.CreateAnnoncePropFragment">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:orientation="vertical"
+            android:layout_height="fill_parent">
+            <!--Put form controls here-->
+            <TextView
+                android:text="Titre de l'annonce"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/Ttitre"
+                android:textStyle="bold"/>
 
-    <!-- TODO: Update blank fragment layout -->
+            <EditText
+                android:id="@+id/ETitreAnnonce"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:layout_below="@+id/Ttitre"
+                android:layout_toEndOf="@+id/Ttitre"
+                android:layout_marginTop="5dp" />
 
+            <TextView
+                android:text="Description de l'annonce"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/Tdescription"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/ETitreAnnonce"
+                android:textStyle="bold"/>
 
-    <TextView
-        android:text="Titre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/Ttitre" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:id="@+id/EDescriAnnonce"
+                android:layout_below="@+id/Tdescription"
+                android:layout_alignStart="@+id/Tdescription"
+                android:layout_marginTop="5dp"
+                 />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Titre de l'annonce"
-        android:ems="10"
-        android:id="@+id/ETitreAnnonce"
-        android:layout_below="@+id/Ttitre"
-        android:layout_toEndOf="@+id/Ttitre"
-        android:layout_marginTop="11dp" />
+            <TextView
+                android:text="Adresse du bien"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/Tadresse"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/EDescriAnnonce"
+                android:layout_alignParentStart="true"
+                android:textStyle="bold"/>
 
-    <TextView
-        android:text="Description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/Tdescription"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/ETitreAnnonce" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Description de l'annonce"
-        android:ems="10"
-        android:id="@+id/EDescriAnnonce"
-        android:layout_below="@+id/Tdescription"
-        android:layout_alignStart="@+id/Tdescription"
-        android:layout_marginTop="13dp" />
-    <TextView
-        android:text="Adresse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/Tadresse"
-        android:layout_marginTop="12dp"
-        android:layout_below="@+id/EDescriAnnonce"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Adresse de l'annonce"
-        android:ems="10"
-        android:id="@+id/EAdressAnnonce"
-        android:layout_marginTop="11dp"
-        android:layout_below="@+id/Tadresse"
-         />
-
-
-    <TextView
-        android:text="Téléphone "
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/EAdressAnnonce"
-        android:layout_alignParentStart="true"
-        android:id="@+id/Ttel" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Téléphone "
-        android:ems="10"
-        android:layout_marginTop="14dp"
-        android:id="@+id/ETelContact"
-        android:layout_below="@+id/Ttel"
-       />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ETelContact"
-        android:layout_alignEnd="@+id/Ttel"
-        android:id="@+id/textView2" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Prix du logement"
-        android:ems="10"
-        android:layout_below="@+id/textView2"
-        android:layout_alignStart="@+id/ETelContact"
-        android:id="@+id/EprixLog" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:id="@+id/EAdressAnnonce"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/Tadresse"
+                />
 
 
+            <TextView
+                android:text="Téléphone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/EAdressAnnonce"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="5dp"
+                android:id="@+id/Ttel"
+                android:textStyle="bold"/>
 
-    <TextView
-        android:text="Date de publication"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/EprixLog"
-        android:layout_alignStart="@+id/textView2"
-        android:id="@+id/textView3" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:layout_marginTop="5dp"
+                android:id="@+id/ETelContact"
+                android:layout_below="@+id/Ttel"
+                />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
-        android:layout_below="@+id/textView3"
-        android:id="@+id/EdatePublication" />
+            <TextView
+                android:text="Prix du logement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ETelContact"
+                android:layout_alignEnd="@+id/Ttel"
+                android:layout_marginTop="5dp"
+                android:id="@+id/textView2"
+                android:textStyle="bold"/>
 
-    <Button
-        android:text="Ajouter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/Ajouter"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="21dp" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:layout_below="@+id/textView2"
+                android:layout_alignStart="@+id/ETelContact"
+                android:layout_marginTop="5dp"
+                android:id="@+id/EprixLog" />
 
-    <TextView
-        android:text="Disponibilité logement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView4"
-        android:layout_below="@+id/EdatePublication"
-        android:layout_alignParentStart="true" />
+            <TextView
+                android:text="Date de publication"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/EprixLog"
+                android:layout_alignStart="@+id/textView2"
+                android:layout_marginTop="5dp"
+                android:id="@+id/textView3"
+                android:textStyle="bold"/>
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/EdisponibiliteLoge"
-        android:layout_below="@+id/textView4"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="12dp" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:layout_below="@+id/textView3"
+                android:layout_marginTop="5dp"
+                android:id="@+id/EdatePublication" />
 
-</RelativeLayout>
+            <TextView
+                android:text="Disponibilité logement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView4"
+                android:textStyle="bold"
+                android:layout_below="@+id/EdatePublication"
+                android:layout_marginTop="5dp"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:id="@+id/EdisponibiliteLoge"
+                android:layout_below="@+id/textView4"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="5dp" />
+
+            <Button
+                android:text="Ajouter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Ajouter"
+                style="?android:textAppearanceSmall"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                 />
+
+
+        </LinearLayout>
+    </ScrollView>
+
