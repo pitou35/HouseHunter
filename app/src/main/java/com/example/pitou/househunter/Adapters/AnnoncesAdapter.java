@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.pitou.househunter.ListeAnnonceFragment;
@@ -14,6 +15,7 @@ import com.example.pitou.househunter.R;
 import com.example.pitou.househunter.model.Annonce;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.google.android.gms.internal.zzs.TAG;
 
@@ -24,7 +26,8 @@ import static com.google.android.gms.internal.zzs.TAG;
 public class AnnoncesAdapter  extends ArrayAdapter<Annonce> {
 
     private ListeAnnonceFragment fragmentListeAnnonces;
-    public AnnoncesAdapter(Context context, ArrayList<Annonce> annonces, ListeAnnonceFragment fragment) {
+
+    public AnnoncesAdapter(Context context, List<Annonce> annonces, ListeAnnonceFragment fragment) {
         super(context, 0, annonces);
         fragmentListeAnnonces = fragment;
     }

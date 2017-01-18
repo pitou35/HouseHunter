@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.pitou.househunter.Adapters.AnnoncesAdapter;
 import com.example.pitou.househunter.model.Annonce;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.google.android.gms.internal.zzs.TAG;
 
@@ -43,6 +45,7 @@ public class ListeAnnonceFragment extends Fragment {
     private FirebaseAuth auth;
     private DatabaseReference myRef;
     private DatabaseReference myRefPos;
+    private ListView listAnnonces;
     /*
     La variable qui représente l'adapter de la liste des annonces avec le modèle de l'annonce.
      */
@@ -52,24 +55,25 @@ public class ListeAnnonceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View view= inflater.inflate(R.layout.fragment_liste_annonce, container, false);
+        View view= inflater.inflate(R.layout.fragment_liste_annonce, container, false);
+        listAnnonces=(ListView) view.findViewById(R.id.ListeAnnonces);
+        List<Annonce> Annonces=new ArrayList<>();
+        adapter=new AnnoncesAdapter(getContext(), Annonces, ListeAnnonceFragment.this);
+        listAnnonces.setAdapter(adapter);
         /*
         Récupération des données
          */
-        db = FirebaseDatabase.getInstance();
-        auth=FirebaseAuth.getInstance();
-        auth.getCurrentUser();
-        myRef = db.getReference("Annonces");
-        myRefPos = db.getReference("AnnoncesPos");
 
-        ArrayList<Annonce> arrayOfAnnonces = new ArrayList<Annonce>();
+
+        //ArrayList<Annonce> arrayOfAnnonces = new ArrayList<Annonce>();
         // Create the adapter to convert the array to views
 
-        adapter = new AnnoncesAdapter(getContext(), arrayOfAnnonces, ListeAnnonceFragment.this);
+        //adapter = new AnnoncesAdapter(getContext(), arrayOfAnnonces, ListeAnnonceFragment.this);
 
         Button NewAnnonce = (Button) view.findViewById(R.id.BNewAnnonce);
 
-        myRef.addValueEventListener(new ValueEventListener() {
+
+       /* myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
@@ -93,6 +97,9 @@ public class ListeAnnonceFragment extends Fragment {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+        */
+
+
         NewAnnonce.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,8 +109,50 @@ public class ListeAnnonceFragment extends Fragment {
                 ((MainActivity)getActivity()).showFragment(new CreateAnnoncePropFragment());
             }
         });
-
         return view;
+
+    }
+
+    public void onViewCreated(View view, Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+        db = FirebaseDatabase.getInstance();
+        auth=FirebaseAuth.getInstance();
+        auth.getCurrentUser();
+        myRef = db.getReference("Annonces");
+        myRefPos = db.getReference("AnnoncesPos");
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                String currentU =  auth.getCurrentUser().getUid();
+                Annonce value = dataSnapshot.getValue(Annonce.class);
+                if( value.getIdUser().equals(auth.getCurrentUser().getUid())) {
+
+                    adapter.add(value);
+                }
+                value.setIdAnnonce(dataSnapshot.getKey());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Annonce value = dataSnapshot.getValue(Annonce.class);
+                adapter.remove(value);
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
