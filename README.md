@@ -12,4 +12,4 @@ Collaborateurs M2 MIAGE:
 
 - Pierre-A. Totaro
 
-fournit code source + APK + cahier des charges
+fournit code source + APK + cahier des charges + rapport de conception
